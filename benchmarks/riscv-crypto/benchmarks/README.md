@@ -107,6 +107,6 @@ To be noticed that reference implementation is the SW implementation, while zscr
 
 - To run the above test: 
   ```sh
-  $> riscv-crypto/build/benchmarks/rv64-zscrypto/bin/test
+  $> cd riscv-crypto/build/benchmarks/rv64-zscrypto/bin/test
   $> ./test_hash_sha256-sha256_zscrypto.elf
   ```
