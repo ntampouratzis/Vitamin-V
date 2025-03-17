@@ -1,0 +1,58 @@
+\clearpage
+\subsection{Vector GREV}
+
+These instructions are vectorised versions of the Bitmanip
+\mnemonic{grevi} instruction\footnote{
+See \url{https://github.com/AndyGlew/Ri5-stuff/wiki/VGREV---Vector-Generalized-Reverse}
+for the initial design discussion around vector \mnemonic{grev}.
+}.
+
+\begin{cryptoisa}
+vgrev.vv     vd, vs2, vs1 , vm  // Vector-Vector
+vgrev.vs     vd, vs2, vs1 , vm  // Vector-Scalar
+vgrev.vi     vd, vs2, uimm, vm  // Vector-Immediate
+vgrev.vx     vd, vs2, rs1 , vm  // Vector-XReg
+\end{cryptoisa}
+
+\begin{figure}[h]
+\lstinputlisting[language=sail,firstline=531,lastline=553]{../sail/riscv_insts_crypto_rvv_alu.sail}
+\caption{
+Sail specification for the vector-vector generalised reverse operation.
+Other variants such as vector-scalar and vector-immediate can be seen in
+the Sail model code.
+}
+\label{fig:sail:vgrev}
+\end{figure}
+
+For each \EEW-bit wide element in \vrs{2}, if the corresponding $\vm[i]$
+bit is clear, then the destination element in \vrd is {\em zeroed}.
+If the $\vm[i]$ bit is set, then we apply the
+\texttt{generalised\_reverse} operation to the \EEW-bit element, using the
+$6$-bit \texttt{uimm} immediate as the control variable.
+For a complete specification of the \texttt{generalised\_reverse}
+operation, see 
+\cite[Section 2.2.2, Generalized Reverse]{riscv:bitmanip:draft}.
+
+For the Cryptography Extension,
+Implementations must support an \EEW up to and including \XLEN.
+Executing the instruction with an un-supported \EEW results in an
+Invalid Opcode Exception.
+Only the values of \texttt{uimm} listed in table \ref{tab:vgrev:uimm}
+are required by the Cryptography Extension.
+An un-supported value of \texttt{uimm} results in an
+Invalid Opcode Exception.
+
+\begin{table}
+\centering
+\begin{tabular}{ll}
+\texttt{uimm} Value & Operation                         \\
+\hline
+\texttt{0b000111}   & Reverse bits within bytes         \\
+\texttt{0b011000}   & Reverse bytes within 32-bit words \\
+\texttt{0b111000}   & Reverse bytes within 64-bit words \\
+\hline
+\end{tabular}
+\caption{Required values of \texttt{uimm} which Cryptography Extensions
+of \texttt{vgrev.vi} must support.}
+\label{tab:vgrev:uimm}
+\end{table}

@@ -1,0 +1,72 @@
+
+\clearpage
+\subsection{Scalar SM4 Acceleration}
+\label{sec:scalar:sm4}
+
+\medskip
+
+\begin{bytefield}[bitwidth={1.05em},endianness={big}]{32}
+\bitheader{0-31} \\
+\encsmfoured
+\encsmfourks
+\end{bytefield}
+
+\begin{cryptoisa}
+RV32 / RV64:
+    sm4ed     rt, rs2, bs
+    sm4ks     rt, rs2, bs
+\end{cryptoisa}
+
+This section proposes acceleration instructions for
+the SM4 block cipher\cite{block:sm4:1, ietf:sm4}.
+
+The instructions are taken from proposals found in \cite{MJS:LWAES:20}.
+They are very lightweight and require only a single SBox instance.
+They are designed to give a very high performance improvement with
+minimal area requirements, and resemble a TTables-esq
+software implementation.
+
+\begin{itemize}
+\item \mnemonic{sm4ed} - Encrypt/Decrypt. Applies the
+    SBox and $L$ transformations as part of the round function.
+\item \mnemonic{sm4ks} - KeySchedule. Applies the
+    SBox and $L'$ transformations as part of the KeySchedule.
+\end{itemize}
+
+RISC-V Sail model code for each instruction is found in figure
+\ref{fig:sail:sm4}.
+Note that the instructions source their destination register from
+bits $19:15$ of the encoding, rather than the usual $11:7$.
+This is because the instructions are designed to be used such that
+the destination register is always the same as {\tt rs1}.
+See Appendix \ref{sec:scalar:encodings} for more information.
+
+%
+% Old pseudo code for SM4. 
+%
+%\begin{figure}[h]
+%\begin{lstlisting}[language=pseudo]
+%ssm4.ed(rs1, rs2, bs):
+%    x.8   = rs2.8[bs]
+%    x.32  = zext(SM4SBox(x.8), 32)
+%    x.32  = x.32 ^ (x.32 << 8) ^ (x.32 << 2) ^ (x.32 << 18) ^
+%                   ((x.32 & 0x3F) << 26) ^ ((x.32 & 0xC0) << 10)
+%    x.32  = ROTL(x.32, 8*bs)
+%    rd    = x.32 ^ rs1
+%
+%ssm4.ks(rs1, rs2, bs):
+%    x.8   = rs2.8[bs]
+%    x.32  = zext(SM4SBox(x.8), 32)
+%    x.32  = x.32 ^ ((x.32 & 0x07) << 29) ^ ((x.32 & 0xFE) << 7) ^
+%                   ((x.32 & 1) << 23) ^ ((x.32 & 0xF8) << 13)
+%    x.32  = ROTL(x.32, 8*bs)
+%    rd    = x.32 ^ rs1
+%\end{lstlisting}
+%\caption{Scalar SM4 instruction pseudocode.}
+%\end{figure}
+
+\begin{figure}[h]
+\lstinputlisting[language=sail,firstline=142,lastline=165]{../extern/sail-riscv/model/riscv_insts_kext.sail}
+\caption{RISC-V Sail model specification for the SM4 instructions.}
+\label{fig:sail:sm4}
+\end{figure}

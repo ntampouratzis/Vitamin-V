@@ -1,0 +1,76 @@
+\documentclass[11pt]{article}
+\usepackage{riscv-crypto-spec}
+
+\title{RISC-V Cryptographic Extension Proposals\\Volume II: Vector Instructions}
+\author{Editor: Ben Marshall\\ben.marshall@\{bristol.ac.uk, pqshield.com\}}
+\date{Version $0.7.0$ (\today) \\
+\medskip
+\url{\repourl{}} \\
+\href{\repourl{}}{
+{\small \tt git:\import{../build/spec/}{spec.commit}}} \\
+\bigskip
+{\small
+This work is licensed under a
+\href{http://creativecommons.org/licenses/by/4.0/}{Creative Commons Attribution 4.0 International License}
+}
+}
+
+\begin{document}
+
+% ============================================================================
+
+\maketitle
+
+\import{./tex/}{contributors.tex}
+
+\tableofcontents
+
+% ============================================================================
+
+\input{opcodes-crypto-vector-cmds.tex}
+
+\newpage
+\section{Introduction}
+\label{sec:intro}
+\import{./tex/}{sec-vector-intro.tex}
+
+\subsection{Policies}
+\import{./tex/}{sec-policies.tex}
+
+\subsection{SAIL Specifications}
+\label{sec:sail}
+\import{./tex/}{sec-sail.tex}
+
+\newpage
+\section{Implementation Profiles}
+\label{sec:profiles}
+\import{./tex/}{sec-vector-profiles.tex}
+
+\newpage
+\section{Vector Extension}
+\label{sec:vector}
+\import{./tex/}{sec-vector.tex}
+
+% ============================================================================
+
+\newpage
+\printbibliography
+
+% ============================================================================
+
+%
+% Appendix items with annotations, benchmarking and experimental
+% evidence etc.
+%
+
+\newpage
+\begin{appendices}
+\label{sec:appendix}
+\import{./tex/}{appx-vector-encodings.tex}
+\import{./tex/}{appx-materials.tex}
+\end{appendices}
+
+% ============================================================================
+
+\end{document}
+

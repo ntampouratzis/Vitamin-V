@@ -1,0 +1,86 @@
+[[insns-vaes256k13, Vector AES-256 Generate round key 13 (penultimate)]]
+= vaes256k13.vv
+
+Synopsis::
+Vector AES-256 Generate penultimate round key (13)
+
+Mnemonic::
+vaes256k13.vv vd, vs2, vs1
+
+Encoding::
+[wavedrom, , svg]
+....
+{reg:[
+{bits: 7, name: 'OP-V'},
+{bits: 5, name: 'vd'},
+{bits: 3, name: 'OPMVV'},
+{bits: 5, name: 'vs1'},
+{bits: 5, name: 'vs2'},
+{bits: 1, name: '1'},
+{bits: 6, name: 'funct6'},
+]}
+....
+
+Arguments::
+
+[%autowidth]
+[%header,cols="4,2,2,2,2,2"]
+|===
+|Register
+|Direction
+|EGW
+|EGS 
+|EEW
+|Definition
+
+| Vs1 | input  | 128  | 4 | 32 | AES-256 lower Cipher key
+| Vs2 | input  | 128  | 4 | 32 | AES-256 upper Cipher key
+| Vd  | output | 128  | 4 | 32 | penultimate round key 
+|===
+
+Description:: 
+Generate the penultimate (13th) round key for AES-256 for consumption by
+a subsequent AES-256 all-rounds decryption instruction.
+Applies 11 AES-256 KeySchedule rounds to each element group, and
+writes the 128-bit result to the corresponding element group in `vd`.
+
+This instruction ignores `vtype.vsew`. +
+The number of element groups to be processed is `vl`/`EGS`.
+`vl` must be set to the number of `EEW=32` elements to be processed and 
+therefore must be a multiple of `EGS=4`. + 
+Likewise, `vstart` must be a multiple of `EGS=4`
+
+Operation::
+[source,pseudocode]
+--
+function clause execute (VAESES256k13(rnd, vs1, vs2)) = {
+  assert((vl%EGS)<>0)       // vl must be a multiple of EGS
+  assert((vstart%EGS)<>0) //  vstart must be a multiple of EGS
+
+  eg_len = (vl/EGS)
+  eg_start = (vstart/EGS)
+  
+  foreach (i from eg_start to eg_len-1) {
+    let current : bits(128) = get_velem(vs2, EGW=128, i);
+    let previous : bits(128) = get_velem(vs1, EGW=128, i);
+    foreach (rnd from 2 to 13)
+      let next    : bits(128) = aes_256_forward_key_schedule(rnd, current, previous);
+      let previous : bits(128) = current
+      let current : bits(128) = next
+    set_velem(vd, EGW=128, i, next);
+  }
+  RETIRE_SUCCESS
+}
+--
+
+Included in::
+[%header,cols="4,2,2"]
+|===
+|Extension
+|Minimum version
+|Lifecycle state
+
+| <<zvknf>>
+| v0.1.0
+| In Development
+|===

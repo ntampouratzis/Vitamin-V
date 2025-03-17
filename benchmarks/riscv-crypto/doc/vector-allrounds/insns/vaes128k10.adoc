@@ -1,0 +1,87 @@
+[[insns-vaes128k10, Vector AES-128 Generate round key 10 (final)]]
+= vaes128k10.v
+
+Synopsis::
+Vector AES-128 Generate final round key (10)
+
+Mnemonic::
+vaes128k10.v vd, vs2
+
+Encoding::
+[wavedrom, , svg]
+....
+{reg:[
+{bits: 7, name: 'OP-V'},
+{bits: 5, name: 'vd'},
+{bits: 3, name: 'OPMVV'},
+{bits: 5, name: 'funct5'},
+{bits: 5, name: 'vs2'},
+{bits: 1, name: '1'},
+{bits: 6, name: 'funct6'},
+]}
+....
+Arguments::
+
+[%autowidth]
+[%header,cols="4,2,2,2,2,2"]
+|===
+|Register
+|Direction
+|EGW
+|EGS 
+|EEW
+|Definition
+
+| vs2 | input  | 128  | 4 | 32 | AES-128 Cipher key
+| vd  | output | 128  | 4 | 32 | final round key 
+|===
+
+
+Description:: 
+
+Generate the final (10th) round key for AES-128 for consumption by
+a subsequent AES-128 all-rounds decryption instruction.
+Applies 9 AES-128 KeySchedule rounds to each element group of `vs2`, and
+writes the 128-bit result to the corresponding element group in `vd`.
+
+This instruction ignores `vtype.vsew`. +
+The number of element groups to be processed is `vl`/`EGS`.
+`vl` must be set to the number of `EEW=32` elements to be processed and 
+therefore must be a multiple of `EGS=4`. + 
+Likewise, `vstart` must be a multiple of `EGS=4`
+
+Operation::
+[source,pseudocode]
+--
+function clause execute (VAES128k10(rnd, vs2)) = {
+
+//  eg_len = floor(vl/EGS) // only process full element groups
+//  eg_start = ceil(vstart/EGS)
+
+  assert((vl%EGS)<>0)       // vl must be a multiple of EGS
+  assert((vstart%EGS)<>0) //  vstart must be a multiple of EGS
+
+  eg_len = (vl/EGS)
+  eg_start = (vstart/EGS)
+  
+  foreach (i from eg_start to eg_len-1) {
+    let rky : bits(128) = get_velem(vs2, EGW=128, i);
+    foreach (rnd from 1 to 9)
+      let rky    : bits(128) = aes_128_forward_key_schedule(rnd, rky);
+    set_velem(vd, EGW=128, i, rky);
+  }
+  RETIRE_SUCCESS
+}
+--
+
+Included in::
+[%header,cols="4,2,2"]
+|===
+|Extension
+|Minimum version
+|Lifecycle state
+
+| <<zvknf>>
+| v0.1.0
+| In Development
+|===

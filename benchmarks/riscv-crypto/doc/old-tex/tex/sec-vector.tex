@@ -1,0 +1,56 @@
+
+The following instructions extend the RISC-V Vector (``V'') extension.
+We use the following notation to refer to vector registers:
+{\tt vrd}  is a vector        destination register,
+{\tt vrsX} is a vector source             register
+and
+{\tt vrt}  is a vector source/destination register.
+
+The following definitions are taken from the draft
+vector specification {\tt v0.9}\footnote{\url{https://github.com/riscv/riscv-v-spec/releases/tag/0.9}}.
+They are re-produced here to make the following sections easier to
+read using only this document.
+
+\begin{itemize}
+\item[\ELEN] - {\em Maximum} size of a single vector element in bits.
+              $\ELEN \ge 8$ and must be a power of $2$.
+\item[\VLEN] - The width in bits of each vector register.
+              $\VLEN \ge \ELEN$ and must be a power of $2$.
+\item[\SEW]  - The Selected Element Width in bits.
+              Each vector register is viewed as $N=\VLEN/\SEW$ elements.
+\item[\LMUL] - The Vector Length Multiplier.
+              $\LMUL\in\{{1\over 8},{1\over 4},{1\over 2},1,2,4,8\}$.
+              When $\LMUL\ge1$, multiple physical vector registers are
+              concatenated together to form a single {\em logical} register.
+              $\LMUL<1$ is not salient to the vector crypto instructions.
+              When $\LMUL>1$, only vector register addresses which are
+              integer multiples of $\LMUL$ may be accessed.
+\item[\VLMAX]- Is the maximum number of elements a single vector register
+              can contain: $\VLMAX=\LMUL*\VLEN/\SEW$.
+\item[\EEW]  - Effective Element Width. This is defined per vector register
+              operand, and allows for instructions which operate on
+              two sets of elements of different widths. E.g. widening
+              instructions.
+\item[\EMUL] - Effective $\LMUL$. Like $\EEW$, this is defined per vector
+              register operand, allowing for widening and narrowing
+              operations.
+\end{itemize}
+
+The base vector extension has the constraint $\VLEN \ge \ELEN$.
+The vector crypto instructions require that $\ELEN \ge 128$ for all
+of its instructions, and up to $1024$ for some.
+Note that the vector crypto extension {\em does not} require these
+large \ELEN values to be supported for all instructions, only those
+which require them in order to function.
+Each instruction described below includes the minimum \ELEN it
+requires to be supported.
+
+% ============================================================================
+
+\import{./}{sec-vector-aes.tex}
+\import{./}{sec-vector-clmul.tex}
+\import{./}{sec-vector-sha2.tex}
+\import{./}{sec-vector-rotate.tex}
+\import{./}{sec-vector-grev.tex}
+
+% ============================================================================

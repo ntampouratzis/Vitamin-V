@@ -1,0 +1,129 @@
+[[insns-vaesd256, Vector AES-256 decrypt all-rounds]]
+= vaesd256.[vv,vs]
+
+Synopsis::
+Vector AES-256 all rounds decryption instruction.
+
+Mnemonic::
+vaesd256.vv vd, vs2, vs1 +
+vaesd256.vs vd, vs2, vs1 
+
+Encoding (Vector-Vector)::
+[wavedrom, , svg]
+....
+{reg:[
+{bits: 7, name: 'OP-V'},
+{bits: 5, name: 'vd'},
+{bits: 3, name: 'OPIVV'},
+{bits: 5, name: 'vs1'},
+{bits: 5, name: 'vs2'},
+{bits: 1, name: '1'},
+{bits: 6, name: 'funct6'},
+]}
+....
+
+Encoding (Vector-Scalar)::
+[wavedrom, , svg]
+....
+{reg:[
+{bits: 7, name: 'OP-V'},
+{bits: 5, name: 'vd'},
+{bits: 3, name: 'OPMVV'},
+{bits: 5, name: 'vs1'},
+{bits: 5, name: 'vs2'},
+{bits: 1, name: '1'},
+{bits: 6, name: 'funct6'},
+]}
+....
+
+Arguments::
+
+[%autowidth]
+[%header,cols="4,2,2,2,2,2"]
+|===
+|Register
+|Direction
+|EGW
+|EGS 
+|EEW
+|Definition
+
+| Vd  | input  | 128  | 4 | 32 | Cipher text
+| Vs1 | input  | 128  | 4 | 32 | Penultimate Round key
+| Vs2 | input  | 128  | 4 | 32 | Final Round key
+| Vd  | output | 128  | 4 | 32 | Plain text 
+|===
+
+[NOTE]
+====
+This instruction does not support a vector-scalar form where the round keys are provided as scalars because
+it uses two registers to hold the final two 128-bit round keys.
+====
+
+Description:: 
+This instruction implements the entire AES-256 block cipher decryption
+function. Starting with the final two round keys, It internally generates each of the previous round keys and performs each of the rounds.
+
+It treats each `EGW=128` element group of `vd` as the plaintext
+and concatenates `EGW=128` element groups of `vs1` and `vs2` as the 256-bit encryption key.
+
+The result (i.e. the ciphertext) is written to `EGW=128` element groups of `vd`.
+
+This instruction operates on element groups in the source and destination registers:
+
+This instruction requires that: +
+
+- `vl` is an integral multiple of `EGS`
+- `vstart` is an integral multiple of `EGS`
+
+This instruction ignores`SEW`
+
+
+
+Operation::
+[source,sail]
+--
+function clause execute (VAES256E(vs1, vs2, vd,)) = {
+  assert((vl%EGS)<>0)       // vl must be a multiple of EGS
+  assert((vstart%EGS)<>0) //  vstart must be a multiple of EGS
+
+  eg_len = (vl/EGS)
+  eg_start = (vstart/EGS)
+  
+  foreach (i from eg_start to eg_len-1) {
+    state : bits(128) = get_velem(vd, EGW=128, i);
+    ekey  : bits(256) = get_velem(vs1, EGW=128, i) @
+                        get_velem(vs2, EGW=128, i) ;
+    rkey  : bits(128) = ekey[127..0];
+    state = state ^ rkey;
+    foreach(r from 1 to 13) {
+      state = aes_inv_shift_rows(state);
+      state = aes_inv_sub_bytes(state);
+      state = state ^ rkey;
+      state = aes_inv_mix_columns(state);
+      rkey  = aes_256_reverse_key_schedule(r,ekey);
+      ekey  = rkey @ ekey[256..128];
+    }
+    state = aes_inv_shift_rows(state);
+    state = aes_inv_sub_bytes(state);
+    state = state ^ rkey;
+    set_velem(vd, EGW=128, i, state);
+  }
+  RETIRE_SUCCESS
+}
+--
+
+Included in::
+[%header,cols="4,2,2"]
+|===
+|Extension
+|Minimum version
+|Lifecycle state
+
+| <<zvknf>>
+| v0.1.0
+| In Development
+|===
+
+
+

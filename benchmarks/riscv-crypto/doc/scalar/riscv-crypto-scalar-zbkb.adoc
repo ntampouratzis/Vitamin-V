@@ -1,0 +1,50 @@
+[[zbkb,Zbkb]]
+=== `Zbkb` - Bitmanip instructions for Cryptography
+
+These are a subset of the Bitmanipulation Extension `Zbb` which are
+particularly useful for Cryptography.
+
+NOTE: Some of these instructions are defined in the first Bitmanip
+ratification package, and some are not (
+<<insns-pack,pack>>,
+<<insns-packh,packh>>,
+<<insns-packw,packw>>,
+<<insns-brev8,brev8>>,
+<<insns-zip,zip>>,
+<<insns-unzip,unzip>>).
+All of the instructions in <<zbkb>> have their complete specification included
+in this document, including those _not_ present in the initial
+Bitmanip ratification package.
+This is to make the present specification complete as a standalone document.
+Inevitably there might be small divergences between the Bitmanip and
+Scalar Cryptography specification documents as they move at different
+paces.
+When this happens, assume that the Bitmanip specification has the
+most up-to-date version of Bitmanip instructions.
+This is an unfortunate but necessary stop-gap while Scalar Cryptography
+and Bitmanip are being rapidly iterated on prior to public review.
+
+[%header,cols="^1,^1,4,8"]
+|===
+|RV32
+|RV64
+|Mnemonic
+|Instruction
+
+| &#10003; | &#10003; |  ror         | <<insns-ror>>
+| &#10003; | &#10003; |  rol         | <<insns-rol>>
+| &#10003; | &#10003; |  rori        | <<insns-rori>>
+|          | &#10003; |  rorw        | <<insns-rorw>>
+|          | &#10003; |  rolw        | <<insns-rolw>>
+|          | &#10003; |  roriw       | <<insns-roriw>>
+| &#10003; | &#10003; |  andn        | <<insns-andn>>
+| &#10003; | &#10003; |  orn         | <<insns-orn>>
+| &#10003; | &#10003; |  xnor        | <<insns-xnor>>
+| &#10003; | &#10003; |  pack        | <<insns-pack>>
+| &#10003; | &#10003; |  packh       | <<insns-packh>>
+|          | &#10003; |  packw       | <<insns-packw>>
+| &#10003; | &#10003; |  brev8       | <<insns-brev8>>
+| &#10003; | &#10003; |  rev8        | <<insns-rev8>>
+| &#10003; |          |  zip         | <<insns-zip>>
+| &#10003; |          |  unzip       | <<insns-unzip>>
+|===

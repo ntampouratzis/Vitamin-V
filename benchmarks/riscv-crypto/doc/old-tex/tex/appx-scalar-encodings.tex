@@ -1,0 +1,276 @@
+
+\newpage
+\section{Instruction Encodings}
+\label{sec:scalar:encodings}
+
+This section describes the encodings for the {\em Scalar} Cryptography
+extension.
+It is developed in accordance with the RISC-V Instruction Encodings
+Allocation Policy~\cite{riscv:policy:encodings}.
+Listed below are the evaluation criteria for the proposed encodings.
+Some of these are re-statements of the obvious, some are re-statements of
+the Allocation Policy document, and some are added to acknowledge the
+nature of the instructions being proposed.
+
+\begin{enumerate}
+\item \label{itm:enc:1}
+The total number of encoding points used will be minimised.
+\item \label{itm:enc:2}
+The size of the decoder logic generally will be minimised.
+\item \label{itm:enc:3}
+All instructions will re-use existing encoding formats where
+appropriate. Where an instruction does not exactly fit an existing format,
+the closest format will be used, with arguments as to why that format is
+best.
+\item \label{itm:enc:4}
+The complexity of {\em rejecting} invalid instructions must be balanced with
+the complexity of identifying {\em valid} instructions.
+\item \label{itm:enc:5}
+Where a particular design choice has been made, rationale will be provided
+and other rejected options will be described.
+Where the design choice is somewhat arbitrary (at-least to the designer's
+knowledge) this too will be noted as an indication someone might be
+able to do better.
+\item \label{itm:enc:6}
+Where instructions are exclusive to a particular base architecture
+(i.e. used on RV32 / RV64 only), these encodings will be overlapped with
+{\em other} instructions which are exclusive to a {\em different base
+architecture}. This allows the base architecture to act as an additional
+implicit bit in the encoding, thus saving actual encoding space.
+\item \label{itm:enc:7}
+New encoding constraints such as relationships between register addresses
+will be {\em sufficient but not necessary} to uniquely decode all of
+the instructions.
+This allows for additional saving of encoding space {\em if and only if}
+the additional complexity and costs are deemed worth while.
+\end{enumerate}
+
+\subsection{Decoding Strategy}
+
+Scalar Cryptography instructions which write a single
+destination register, and read two source registers
+best fit in the {\tt OP} major opcode, which contains other ALU-esq
+instructions that source two registers.
+Scalar Cryptography instructions that source a single register ({\tt rs1})
+best fit into the {\tt OP-IMM} major opcode.
+Even instructions with only a single source register and no immediate are
+better placed in the {\tt OP-IMM} space, because the decoder will already
+have inferred that only a single register needs reading, and can disregard
+the {\tt rs2} field.
+
+The encodings for the Scalar Cryptography instructions are chosen based on
+two assumptions.
+First, the instruction implementations share little or no logic with existing
+RISC-V instructions, and so can be expected to be implemented
+independently.
+Second, it will be reasonable to implement all of the Scalar Cryptography
+instructions as part of the same {\em functional unit} within the
+execution pipeline of a core.
+
+Based on these two assumptions, we want to:
+very quickly identify
+that we are decoding {\em any} Scalar Cryptography instruction, in order to
+select the correct functional unit to send it to; and
+easily identify {\em which} Scalar Cryptography instruction we are decoding,
+so that it may be identified and executed with minimal effort by the
+functional unit.
+
+Scalar Cryptography instructions all use {\tt func3=0b000} in the {\tt OP}
+major opcode, or {\tt func3=0b001} in the {\tt OP-IMM} major opcode.
+Additionally, {\tt bit[28]} is always set.
+This places them adjacent to the {\tt add/mul/sub} instructions in {\tt OP},
+or the {\tt slli/fsgnj.q} instructions in {\tt OP-IMM} 
+but distinguished always by bit $28$.
+Logic for identifying each of these sub-field values already exists, so
+the cost of separating all Scalar Crypto instructions from the rest of the
+ISA is of the order of three 2-input AND gates and a 2-input OR gate.
+
+\begin{verbatim}
+    wire is_scalar_crypto = bit[28] && (
+        func3==0b000 && OPCODE==OP      ||
+        func3==0b001 && OPCODE==OP-IMM  );
+\end{verbatim}
+
+Individual instructions within the Scalar Cryptography extension
+are then interpreted based on the {\tt func7} and {\tt rs2/shamt} bitfields.
+
+All Scalar Cryptography instructions with a single register operand can be
+distinguished with {\tt func7=0b0001000} in the {\tt OP-IMM} major opcode.
+The {\tt rs2} field is then used to encode the exact kind of instruction.
+Although this means that an instruction which does not read {\tt rs2} has
+a non-zero {\tt rs2} field (which might be inefficient or cause un-wanted
+register toggling in non-gated designs),
+it is more efficient in terms of opcode-space to re-use the {\tt rs2} field
+for encoding bits, and
+so leave additional {\tt func7} encodings free for more instructions which
+use two source registers.
+The {\tt rs2} field overlaps with the {\tt shamt} field in the {\tt OP-IMM}
+major opcode, meaning the decoder can treat the encoding bits as an
+immediate for the execution unit responsible for cryptography
+instructions.
+
+For single operand SHA instructions,
+bit $22$ distinguishes SHA256 and SHA512, while
+bits $21:20$ distinguish between
+{\tt sum0},
+{\tt sum1},
+{\tt sig0},
+and
+{\tt sig1}.
+For the RV32-only SHA512 instructions,
+bits $26:25$ distinguish between {\tt sig/sum} and {\tt 0/1},
+while bit $27$ distinguishes high/low variants of the {\tt sha512sig*}
+instructions.
+All of these bits were chosen arbitrarily.
+Having the operation bits for SHA512/SHA256 instructions at a different place
+in the instruction on RV32 is slightly inefficient and costs more gates,
+but is much more efficient in terms of opcode space.
+All encodings taken up by {\tt sha512*} instructions on RV32 are
+free for use by other instructions on RV64.
+
+Bit $29$ distinguishes between hash function instructions and block
+cipher instructions.
+Bit $25$ distinguishes between SM4 and AES Block ciphers.
+These bits were chosen arbitrarily.
+
+All AES round instructions use bits $27:26$ to distinguish between
+encrypt/decrypt and middle/final round variants.
+The RV32 and RV64 AES round instructions overlap, as they are mutually
+exclusive given the base ISA.
+This leaves some spare encoding space on RV64, when bits $31:30$
+are non-zero, due to the {\tt bs} immediate for the RV32 AES instructions.
+As single-source-register instructions,
+\mnemonic{aes64ks1i} and \mnemonic{aes64im}
+live in the {\tt OP-IMM} major opcode, adjacent to the hash function
+instructions but distinguished from them by bit $29$.
+
+For the SM4 and RV32 AES instructions, we introduce a new {\em destructive}
+instruction format, where the destination register is sourced from
+the {\tt rs1} field.
+We call this combined source/destination register {\tt rt}.
+This reflects the fact that these instructions are designed to {\em always}
+use their source/destination registers in this way.
+This takes the number of encoding points used per RV32 AES / SM4 instruction
+from $131072$ to $4096$.
+We source {\tt rd} from {\tt rs1} (rather than the reverse) because on
+the smaller cores we expect these instructions to be use on, it is
+more important to be able to decode {\tt rs1} quickly than {\tt rd}.
+The former {\tt rd} field (bits $11:7$) are re-used as encoding space.
+
+Table \ref{tab:encodings:counts} shows the number of encoding points
+taken up by each instruction individually, and all instructions for either
+the RV32 or RV64 base architecture.
+The entire 32-bit instruction opcode space is $2^{30}$ encoding points.
+The instructions exclusive to the Scalar Cryptography extension
+(i.e. ignoring those borrowed from Bitmanip)
+take up $\num{2.12e-2}\%$
+and     $\num{1.86e-2}\%$
+of the RV32 and RV64 encoding spaces respectively.
+
+The actual encodings for all RV32 and RV64 instructions are
+found in sections
+\ref{sec:encodings:rv32}
+and
+\ref{sec:encodings:rv64}
+respectively, or alongside each instruction description.
+
+\begin{table}[]
+\centering
+\begin{tabular}{@{}llll@{}}
+\toprule
+Instruction      & RV32   & RV64   & Notes \\ \midrule
+{\tt       sm4ed}& 4096   & 4096   & Down from 131072 when requiring {\tt rs1=rd}. \\
+{\tt       sm4ks}& 4096   & 4096   & Down from 131072 when requiring {\tt rs1=rd}. \\
+{\tt       sm3p0}& 1024   & 1024   &           \\
+{\tt       sm3p1}& 1024   & 1024   &           \\
+{\tt  sha256sum0}& 1024   & 1024   &           \\
+{\tt  sha256sum1}& 1024   & 1024   &           \\
+{\tt  sha256sig0}& 1024   & 1024   &           \\
+{\tt  sha256sig1}& 1024   & 1024   &           \\
+{\tt   aes32esmi}& 4096   &        & Down from 131072 when requiring {\tt rs1=rd}. \\
+{\tt    aes32esi}& 4096   &        & Down from 131072 when requiring {\tt rs1=rd}. \\
+{\tt   aes32dsmi}& 4096   &        & Down from 131072 when requiring {\tt rs1=rd}. \\
+{\tt    aes32dsi}& 4096   &        & Down from 131072 when requiring {\tt rs1=rd}. \\
+{\tt sha512sum0r}& 32768  &        &           \\
+{\tt sha512sum1r}& 32768  &        &           \\
+{\tt sha512sig0l}& 32768  &        &           \\
+{\tt sha512sig0h}& 32768  &        &           \\
+{\tt sha512sig1l}& 32768  &        &           \\
+{\tt sha512sig1h}& 32768  &        &           \\
+{\tt   aes64ks1i}&        & 16384  & Require {\tt rcon<=0xA}    \\
+{\tt    aes64ks2}&        & 32768  &           \\
+{\tt     aes64im}&        & 1024   &            \\
+{\tt    aes64esm}&        & 32768  & Overlaps with {\tt aes32esmi}.\\
+{\tt     aes64es}&        & 32768  & Overlaps with {\tt aes32esi}.\\
+{\tt    aes64dsm}&        & 32768  & Overlaps with {\tt aes32dsmi}.\\
+{\tt     aes64ds}&        & 32768  & Overlaps with {\tt aes32dsi}.\\
+{\tt  sha512sum0}&        & 1024   &           \\
+{\tt  sha512sum1}&        & 1024   &           \\
+{\tt  sha512sig0}&        & 1024   &           \\
+{\tt  sha512sig1}&        & 1024   &           \\
+\midrule
+Totals           &227328  & 199680 &           \\
+\bottomrule
+\end{tabular}
+\caption{Encoding point counts for each instruction.
+Note \mnemonic{pollentropy} and \mnemonic{getnoise} are not shown, as
+they are pseudo-ops relating to CSR reads.}
+\label{tab:encodings:counts}
+\end{table}
+
+\clearpage
+\subsection{Instruction Encodings Table: RV32}
+\label{sec:encodings:rv32}
+
+\begin{bytefield}[bitwidth={1.05em},endianness={big}]{32}
+\bitheader{0-31} \\
+\encpollentropy
+\encgetnoise
+\encsmthreepzero
+\encsmthreepone
+\encshatwofivesixsumzero
+\encshatwofivesixsumone
+\encshatwofivesixsigzero
+\encshatwofivesixsigone
+\encshafiveonetwosumzeror
+\encshafiveonetwosumoner
+\encshafiveonetwosigzerol
+\encshafiveonetwosigzeroh
+\encshafiveonetwosigonel
+\encshafiveonetwosigoneh
+\encsmfoured
+\encsmfourks
+\encaesthreetwoesmi
+\encaesthreetwoesi
+\encaesthreetwodsmi
+\encaesthreetwodsi
+\end{bytefield}
+
+\clearpage
+\subsection{Instruction Encodings Table: RV64}
+\label{sec:encodings:rv64}
+
+\begin{bytefield}[bitwidth={1.05em},endianness={big}]{32}
+\bitheader{0-31} \\
+\encpollentropy
+\encgetnoise
+\encsmfoured
+\encsmfourks
+\encsmthreepzero
+\encsmthreepone
+\encshatwofivesixsumzero
+\encshatwofivesixsumone
+\encshatwofivesixsigzero
+\encshatwofivesixsigone
+\encshafiveonetwosumzero
+\encshafiveonetwosumone
+\encshafiveonetwosigzero
+\encshafiveonetwosigone
+\encaessixfourksonei
+\encaessixfourim
+\encaessixfourkstwo
+\encaessixfouresm
+\encaessixfoures
+\encaessixfourdsm
+\encaessixfourds
+\end{bytefield}

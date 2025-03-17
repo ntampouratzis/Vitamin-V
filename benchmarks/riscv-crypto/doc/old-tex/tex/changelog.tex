@@ -1,0 +1,66 @@
+
+\begin{itemize}
+\item[17/12/19] \begin{itemize}
+    \item Initial first version shown to Crypto Task group.
+\end{itemize}
+\item[10/01/20] \begin{itemize}
+    \item Don't recommend funnel shifts for RV64, 128-bit rotations
+          are not common enough to justify.
+    \item Change LUT4 instruction. Go for very efficient RV64 instruction
+          and split 4-to-2 32-bit instruction.
+          Avoids extra ternary instructions.
+\end{itemize}
+\item[20/01/20] \begin{itemize}
+    \item LUT4 specification updates for 32-bit variant based on TG discussion.
+    \item Initial performance code size impact for SHA256/512 instructions.
+\end{itemize}
+\item[24/01/20] \begin{itemize}
+    \item Split AES proposals into 3 variants.
+\end{itemize}
+\item[19/02/20] \begin{itemize}
+    \item Revisions to AES proposals and added benchmarking results.
+    \item Added SHA256/512 benchmark results.
+    \item Added AES        benchmark results.
+    \item Codified scalar extension design policies.
+\end{itemize}
+\item[09/03/20] \begin{itemize}
+    \item Selected Markku's lightweight AES proposal for RV32.
+    \item Added a dedicated RV64 scalar AES proposal.
+\end{itemize}
+\item[26/03/20] \begin{itemize}
+    \item Modified AES RV64 proposal with Barry's improved KeySchedule.
+    \item Add Markku's lightweight SM4 proposal.
+    \item Add scalar SM3 instructions, similar to SHA2 instructions.
+\end{itemize}
+\item[17/04/20] \begin{itemize}
+    \item Added RV32 instructions for accelerating SHA-512.
+\end{itemize}
+\item[22/04/20] \begin{itemize}
+    \item Update RV64 AES instructions: remove need for hi/lo variants of
+          the round instructions.
+\end{itemize}
+\item[28/04/20] \begin{itemize}
+    \item Fix SM4 instruction specs. 
+\end{itemize}
+\item[08/05/20] \begin{itemize}
+    \item Removed Indexed load/store. They weren't used in any of the
+          benchmarked workloads, and can be optimised/coded around.
+    \item Removed old fused multiply add/accumulate. Not used, ternary.
+    \item Removed cmov instruction. Single ternary op not justified since
+          it doesn't appear in performance critical places.
+\end{itemize}
+\item[23/06/20] \begin{itemize}
+    \item Transcribed vector instruction descriptions from Richard's
+          slide-show.
+    \item Changed ``feature discovery'' section to
+          ``implementation profiles'' section.
+\end{itemize}
+\item[16/07/20] \begin{itemize}
+    \item Added vector carry-less multiply instructions.
+    \item Entropy source proposal all merged in.
+\end{itemize}
+\item[03/08/20] \begin{itemize}
+    \item Added vector rotate and vector grev.
+    \item Replaced pseudo-code of all scalar instructions with Sail models.
+\end{itemize}
+\end{itemize}

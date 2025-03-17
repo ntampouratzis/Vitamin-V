@@ -1,0 +1,114 @@
+\documentclass[11pt]{article}
+\usepackage{riscv-crypto-spec}
+
+\title{RISC-V Cryptographic Extension Proposals\\Volume I: Scalar \& Entropy Source Instructions}
+\author{Editor: Ben Marshall\\ben.marshall@\{bristol.ac.uk, pqshield.com\}}
+\date{Version $0.9.0$ (\today) \\
+\medskip
+\url{\repourl{}} \\
+\href{\repourl{}}{
+{\small \tt git:\import{../build/spec/}{spec.commit}}} \\
+\bigskip
+{\small
+This work is licensed under a
+\href{http://creativecommons.org/licenses/by/4.0/}{Creative Commons Attribution 4.0 International License}
+}
+}
+
+\begin{document}
+
+% ============================================================================
+
+\maketitle
+
+\import{./tex/}{contributors.tex}
+
+\tableofcontents
+
+% ============================================================================
+
+\input{opcodes-crypto-scalar-cmds.tex}
+
+\newpage
+\section{Introduction}
+\label{sec:intro}
+\import{./tex/}{sec-scalar-intro.tex}
+
+\subsection{Intended Audience}
+\label{sec:audience}
+\import{./tex/}{sec-audience.tex}
+
+\subsection{Sail Specifications}
+\label{sec:sail}
+\import{./tex/}{sec-sail.tex}
+
+\subsection{Policies}
+\import{./tex/}{sec-policies.tex}
+
+\newpage
+\section{Implementation Profiles}
+\label{sec:profiles}
+\import{./tex/}{sec-scalar-profiles.tex}
+
+\clearpage
+\section{Scalar Cryptography Extension}
+\label{sec:scalar}
+
+As per the RISC-V Cryptographic Extensions Task Group charter:
+``{\em The committee will also make ISA extension proposals for lightweight
+scalar instructions for 32- and 64-bit machines that improve the performance
+and reduce the code size required for software execution of common algorithms
+like AES and SHA and lightweight algorithms like PRESENT and GOST}."
+
+\bigskip
+
+For context, some of these instructions have been developed based on academic
+work at the University of Bristol as part of the XCrypto project
+\cite{MPP:19},
+and work by
+Paris T\'{e}l\'{e}com on acceleration of lightweight block ciphers
+\cite{TGMGD:19}.
+
+
+% ============================================================================
+
+\import{./tex/}{sec-scalar-bitmanip.tex}
+\import{./tex/}{sec-scalar-aes.tex}
+\clearpage
+\import{./tex/}{sec-scalar-sha2.tex}
+\import{./tex/}{sec-scalar-sm3.tex}
+\import{./tex/}{sec-scalar-sm4.tex}
+\clearpage
+\import{./tex/}{sec-scalar-timing.tex}
+
+
+\newpage
+\section{Entropy Source Extension}
+\label{sec:randombit}
+\import{./tex/}{sec-entropy-source.tex}
+
+% ============================================================================
+
+\newpage
+\printbibliography
+
+% ============================================================================
+
+%
+% Appendix items with annotations, benchmarking and experimental
+% evidence etc.
+%
+
+\newpage
+\begin{appendices}
+\label{sec:appendix}
+\import{./tex/}{appx-scalar-encodings.tex}
+\import{./tex/}{appx-entropy.tex}
+\import{./tex/}{appx-materials.tex}
+\import{./tex/}{appx-scalar-sail.tex}
+\end{appendices}
+
+% ============================================================================
+
+\end{document}
+

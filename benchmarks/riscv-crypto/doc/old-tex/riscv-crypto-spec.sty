@@ -1,0 +1,172 @@
+
+\usepackage[titletoc]{appendix}
+\usepackage{amssymb}
+\usepackage[maxbibnames=10,backend=bibtex,style=alphabetic]{biblatex}
+\usepackage{bytefield}
+\usepackage{csquotes}
+\usepackage{fancyvrb}
+\usepackage[margin=2cm]{geometry}
+\usepackage{graphicx}
+\usepackage[hidelinks]{hyperref}
+\usepackage{import}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage{multirow}
+\usepackage{pifont}% http://ctan.org/pkg/pifont
+\usepackage{subcaption}
+\usepackage{siunitx}
+\usepackage{xcolor}
+\usepackage{xspace}
+
+%	2020-07-08 mjos
+
+\usepackage{booktabs}
+\usepackage{tikz}
+\usetikzlibrary{arrows,shapes,chains,calc,fit,positioning,automata}
+\usepgflibrary{shapes.arrows}
+\usepgflibrary{arrows.meta}
+
+%
+
+\newcommand{\cmark}{\ding{52}}%
+\newcommand{\xmark}{\ding{55}}%
+
+\newcommand{\repourl}[1]{https://github.com/riscv/riscv-crypto/#1}
+
+\newcommand{\mnemonic}[1]{
+    {\tt #1}
+}
+
+\newcommand{\xreg}[1]{
+    {\tt #1}
+}
+
+\newcommand{\zeroextended}{
+{\em zero extended}
+}
+
+\newcommand{\instbit}[1]{
+    #1
+}
+\newcommand{\instbitrange}[2]{
+    #1..#2
+}
+
+\newcommand{\XLEN}{{\tt XLEN}\xspace}
+\newcommand{\rdp}{{\tt rdp}\xspace}
+\newcommand{\rd}{{\tt rd}\xspace}
+\newcommand{\rsone}{{\tt rs1}\xspace}
+\newcommand{\rstwo}{{\tt rs2}\xspace}
+\newcommand{\rsthree}{{\tt rs3}\xspace}
+
+\newcommand{\vrd}{{\tt vrd}\xspace}
+\newcommand{\vrs}[1]{{\tt vrs#1}\xspace}
+\newcommand{\vrt}{{\tt vrt}\xspace}
+\newcommand{\vm}{{\tt vm}\xspace}
+
+\newcommand{\ELEN}{{\tt ELEN}\xspace}
+\newcommand{\VLEN}{{\tt VLEN}\xspace}
+\newcommand{\SEW}{{\tt SEW}\xspace}
+\newcommand{\LMUL}{{\tt LMUL}\xspace}
+\newcommand{\VLMAX}{{\tt VLMAX}\xspace}
+\newcommand{\EEW}{{\tt EEW}\xspace}
+\newcommand{\EMUL}{{\tt EMUL}\xspace}
+
+\newcommand{\figref}[1]{Figure \ref{fig:#1}a}
+
+\newcounter{ctrtodo}[section]
+\newcounter{ctrnote}[section]
+\newcounter{ctrquestion}[section]
+\newcounter{ctrpolicy}
+
+\newcommand{\policy}[1]{
+    \refstepcounter{ctrpolicy}
+    \medskip
+    \noindent
+    \parbox{0.97\textwidth}{
+        {\bf Policy \#\thectrpolicy:} #1
+    }
+    \smallskip
+}
+
+\newcommand{\todo}[1]{
+    \refstepcounter{ctrtodo}
+    \medskip
+    \noindent
+    \fbox{
+        \parbox{0.97\textwidth}{
+            \textcolor{red}{{\bf TODO \#\thesection.\thectrtodo:}} #1
+        }
+    }
+    \smallskip
+}
+
+\newcommand{\note}[1]{
+    \refstepcounter{ctrnote}
+    \medskip
+    \noindent
+    \fbox{
+        \parbox{0.97\textwidth}{
+            \textcolor{blue}{{\bf Note \#\thesection.\thectrnote:}} #1
+        }
+    }
+    \smallskip
+}
+
+\newcommand{\question}[1]{
+    \refstepcounter{ctrquestion}
+    \medskip
+    \noindent
+    \fbox{
+        \parbox{0.97\textwidth}{
+            \textcolor{teal}{{\bf Question \#\thesection.\thectrquestion:}} #1
+        }
+    }
+    \smallskip
+}
+
+\addbibresource{riscv-crypto-spec.bib}
+
+\DefineVerbatimEnvironment{cryptobitmanipisa}{Verbatim}{%
+  samepage=true,
+  label=RISC-V Bitmanip/Crypto ISA,
+  labelposition=topline,
+  frame=single,
+  framerule=0.1mm
+}
+
+\DefineVerbatimEnvironment{cryptoisa}{Verbatim}{%
+  samepage=true,
+  label=RISC-V Crypto ISA,
+  labelposition=topline,
+  frame=single,
+  framerule=0.1mm
+}
+
+\lstset{
+  numbers=left,
+  frame=single,
+  keywordstyle=\color{blue},
+  commentstyle=\color{cyan}
+}
+
+\lstdefinestyle{C}{
+    language=C,
+    morekeywords={bool, uint8_t, uint32_t, uint64_t}
+}
+
+\lstdefinelanguage{pseudo}{
+    morekeywords={if, else, for},
+    morecomment=[l]{//}
+}
+
+\lstdefinelanguage{sail}{
+    basicstyle=\footnotesize,
+    breaklines=true,
+    breakatwhitespace=true,
+    keywords={val, unit, let, bits, match, if, then, else, for, function, mapping, clause},
+    comment=[s]{/*}{*/}
+}
+
+\lstdefinestyle{ASM}{
+}

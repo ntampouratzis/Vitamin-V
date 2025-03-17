@@ -1,0 +1,11 @@
+[[zkr,Zkr]]
+=== `Zkr` - Entropy Source Extension
+
+The entropy source extension defines the `seed` CSR at address `0x015`. 
+This CSR provides up to 16 physical `entropy` bits that can be used to
+seed cryptographic random bit generators. 
+
+See <<crypto_scalar_es>> for the normative specification and access control
+notes. <<crypto_scalar_appx_es>> contains design rationale and further
+recommendations to implementers.
+

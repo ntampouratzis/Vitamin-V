@@ -1,0 +1,183 @@
+
+\newpage
+\subsection{Scalar AES Acceleration}
+\label{sec:scalar:aes}
+
+This section details proposals for acceleration of
+the AES block cipher \cite{nist:fips:197} within a scalar RISC-V core,
+obeying the two-read-one-write constraint on general-purpose register
+file accesses.
+Supporting material, including rationale and a design space exploration for
+these instructions can be found in \cite{cryptoeprint:2020:930}.
+
+\subsubsection{RV32 Instructions}
+\label{sec:scalar:aes:rv32}
+
+\begin{bytefield}[bitwidth={1.05em},endianness={big}]{32}
+\bitheader{0-31} \\
+\encaesthreetwoesmi
+\encaesthreetwoesi
+\encaesthreetwodsmi
+\encaesthreetwodsi
+\end{bytefield}
+
+\begin{cryptoisa}
+aes32esi     rt, rs2, bs // Encrypt: SubBytes
+aes32esmi    rt, rs2, bs // Encrypt: SubBytes & MixColumns
+aes32dsi     rt, rs2, bs // Decrypt: SubBytes
+aes32dsmi    rt, rs2, bs // Decrypt: SubBytes & MixColumns
+\end{cryptoisa}
+
+These instructions are a very lightweight proposal, derived from
+\cite{MJS:LWAES:20}.
+They are designed to enable a partial T-Table based implementation
+of AES in hardware, where the SubBytes, ShiftRows and MixColumns
+transformations are all rolled into a single instruction, with the
+per-byte results then accumulated.
+The {\tt bs} immediate operand is a 2-bit {\em Byte Select}, and indicates
+which byte of the input word is operated on.
+RISC-V Sail model code for each instruction is found in figure
+\ref{fig:sail:aes:rv32}.
+Note that the instructions source their destination register from
+bits $19:15$ of the encoding, rather than the usual $11:7$.
+This is because the instructions are designed to be used such that
+the destination register is always the same as {\tt rs1}.
+See Appendix \ref{sec:scalar:encodings} for more information.
+
+These instructions use the Equivalent Inverse Cipher
+construction \cite[Section 5.3.5]{nist:fips:197}.
+This affects the computation of the KeySchedule, as shown in
+\cite[Figure 15]{nist:fips:197}.
+
+\begin{figure}[h]
+\lstinputlisting[language=sail,firstline=55,lastline=71]{../extern/sail-riscv/model/riscv_insts_kext_rv32.sail}
+\caption{RISC-V Sail model specification for the lightweight AES instructions targeting the
+RV32 base architecture.}
+\label{fig:sail:aes:rv32}
+\end{figure}
+
+% ------------------------------------------------------------
+
+\newpage
+\subsubsection{RV64 Instructions}
+\label{sec:scalar:aes:rv64}
+
+\begin{bytefield}[bitwidth={1.05em},endianness={big}]{32}
+\bitheader{0-31} \\
+\encaessixfourksonei
+\encaessixfourkstwo
+\encaessixfourim
+\encaessixfouresm
+\encaessixfoures
+\encaessixfourdsm
+\encaessixfourds
+\end{bytefield}
+
+\begin{cryptoisa}
+aes64ks1i  rd, rs1, rcon // KeySchedule: SubBytes, Rotate, Round Const
+aes64ks2   rd, rs1, rs2  // KeySchedule: XOR summation
+aes64im    rd, rs1       // KeySchedule: InvMixColumns for Decrypt
+aes64esm   rd, rs1, rs2  // Round:    ShiftRows,    SubBytes,    MixColumns
+aes64es    rd, rs1, rs2  // Round:    ShiftRows,    SubBytes
+aes64dsm   rd, rs1, rs2  // Round: InvShiftRows, InvSubBytes, InvMixColumns
+aes64ds    rd, rs1, rs2  // Round: InvShiftRows, InvSubBytes
+\end{cryptoisa}
+
+These instructions are for RV64 only.
+They implement the SubBytes, ShiftRows and MixColumns transformations of AES.
+Each round instruction takes two 64-bit registers as input, representing
+the 128-bit state of the AES cipher, and outputs one 64-bit
+result, i.e. half of the next round state.
+The byte mapping of input register values to AES state and output register
+values is shown in \figref{aes:rv64:mapping}.
+RISC-V Sail model code for the instructions is illustrated in
+\figref{pesudo:aes:rv64}.
+
+\begin{itemize}
+
+\item
+The
+\mnemonic{aes64ks1i}/\mnemonic{aes64ks2}
+instructions are used in the encrypt KeySchedule.
+\mnemonic{aes64ks1i} implements the rotation, SubBytes and Round Constant
+addition steps.
+\mnemonic{aes64ks2} implements the remaining {\tt xor} operations.
+
+\item
+The
+\mnemonic{aes64im}
+instruction applies the inverse MixColumns
+transformation to two columns of the state array, packed into a single
+64-bit register.
+It is used to create the inverse cipher KeySchedule, according to
+the equivalent inverse cipher construction in
+\cite[Page 23, Section 5.3.5]{nist:fips:197}.
+
+\item
+The \mnemonic{aes64esm}/\mnemonic{aes64dsm} instructions perform the
+(Inverse) SubBytes, ShiftRows and MixColumns Transformations.
+
+\item
+The \mnemonic{aes64es}/\mnemonic{aes64ds} instructions perform the
+(Inverse) SubBytes and ShiftRows Transformations.
+They are used for the last round only.
+
+\item
+Computing the next round state uses two instructions.
+The high or low 8 bytes of the next state are selected by swapping the order
+of the source registers.
+The following code snippet shows one round of the AES block encryption.
+{\tt t0} and {\tt t1} hold the current round state.
+{\tt t2} and {\tt t3} hold the next round state.
+\begin{lstlisting}
+aes64esm t2, t0, t1 // ShiftRows, SubBytes, MixColumns bytes 0..7
+aes64esm t3, t1, t0 // "          "         "          "     8..15
+\end{lstlisting}
+\end{itemize}
+
+This proposal requires $6$ instructions per AES round:
+$2$ \mnemonic{ld} instructions to load the round key,
+$2$ \mnemonic{xor} to add the round key to the current state
+and
+$2$ of the relevant AES encrypt/decrypt instructions to perform the
+    SubBytes, ShiftRows and MixColumns round functions.
+An un-rolled AES-128 block encryption with an offline KeySchedule
+hence requires $69$ instructions in total.
+
+These instructions are amenable to macro-op fusion.
+The recommended sequences are:
+\begin{lstlisting}[language=pseudo]
+aes64esm rd1, rs1, rs2 // Different destination registers,
+aes64esm rd2, rs2, rs1 // identical source registers with swapped order.
+\end{lstlisting}
+This is similar to the recommended \mnemonic{mulh}, \mnemonic{mul}
+sequence in the M extension to compute a full $32*32->64$ bit
+multiplication result \cite[Section 7.1]{riscv:spec:user}.
+
+Unlike the $32$-bit AES instructions, the $64$-bit variants
+{\em do not} use the Equivalent Inverse Cipher
+construction \cite[Section 5.3.5]{nist:fips:197}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{diagrams/aes-rv64-state.png}
+\caption{
+Mapping of AES state between input and output registers for the round
+instructions.
+{\tt Rout1} is given by \mnemonic{aes64esm rd, rs1, rs2},
+and
+{\tt Rout2}          by \mnemonic{aes64esm rd, rs2, rs1}.
+The {\tt [Inv]ShiftRows} blocks show how to select the relevant $8$ bytes
+for further processing from the concatenation {\tt rs2 || \tt rs1}.
+}
+\label{fig:aes:rv64:mapping}
+\end{figure}
+
+\begin{figure}[h!]
+\lstinputlisting[language=sail,firstline=64,lastline=105]{../extern/sail-riscv/model/riscv_insts_kext_rv64.sail}
+\caption{
+RISC-V Sail model specification for the RV64 AES instructions.
+}
+\label{fig:pesudo:aes:rv64}
+\end{figure}
+

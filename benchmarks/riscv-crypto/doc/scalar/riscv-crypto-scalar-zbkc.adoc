@@ -1,0 +1,33 @@
+[[zbkc,Zbkc]]
+=== `Zbkc` - Carry-less multiply instructions
+
+Constant time carry-less multiply for Galois/Counter Mode.
+These are separated from the <<zbkb>> because they
+have a considerable implementation overhead which cannot be amortised
+across other instructions.
+
+NOTE: These instructions are defined in the first Bitmanip
+ratification package for the `Zbc` extension.
+All of the instructions in <<zbkc>> have their complete specification included
+in this document, including those _not_ present in the initial
+Bitmanip ratification package.
+This is to make the present specification complete as a standalone document.
+Inevitably there might be small divergences between the Bitmanip and
+Scalar Cryptography specification documents as they move at different
+paces.
+When this happens, assume that the Bitmanip specification has the
+most up-to-date version of Bitmanip instructions.
+This is an unfortunate but necessary stop-gap while Scalar Cryptography
+and Bitmanip are being rapidly iterated on prior to public review.
+
+[%header,cols="^1,^1,4,8"]
+|===
+|RV32
+|RV64
+|Mnemonic
+|Instruction
+
+| &#10003; | &#10003; |  clmul       | <<insns-clmul>>
+| &#10003; | &#10003; |  clmulh      | <<insns-clmulh>>
+|===
+
