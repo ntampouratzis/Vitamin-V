@@ -87,8 +87,7 @@ The available tests that are executed in gem5:
 
 To be noticed that reference implementation is the SW implementation, while zscrypto_rv64 refers to the RISCV crypto-enabled extension.
 
-- One *must* explicitly specify a build config using the `CONFIG=X` option.
-  when invoking make:
+- Usage example:
     ```sh
     $> cd riscv-crypto
     $> source ./bin/conf.sh #setup the project workspace
