@@ -92,13 +92,13 @@ To be noticed that reference implementation is the SW implementation, while zscr
 
 - Build results will be placed in `riscv-crypto/build/benchmarks/rv64-zscrypto/bin/test`.
 
-### Running tests:
+## Running tests:
 
 - Tests live in the `test/` directory, with one test *per algorithm*.
   A file is then linked against each different algorithm static library.
 
 - To run the above test: 
-  ```
+  ```sh
   $> riscv-crypto/build/benchmarks/rv64-zscrypto/bin/test
   $> ./test_hash_sha256-sha256_zscrypto.elf
   ```
