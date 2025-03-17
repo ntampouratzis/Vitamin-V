@@ -54,25 +54,35 @@ To evaluate a set of *popular* cryptographic algorithms on the *baseline* RISC-V
 The available tests that are executed in gem5: 
 
 `build-test-aes_128_reference CONFIG=rv64-baseline`
+
 `build-test-aes_192_reference CONFIG=rv64-baseline`
+
 `build-test-aes_256_reference CONFIG=rv64-baseline`
+
 `build-test-aes_128_zscrypto_rv64 CONFIG=rv64-zscrypto`
+
 `build-test-aes_192_zscrypto_rv64 CONFIG=rv64-zscrypto`
+
 `build-test-aes_256_zscrypto_rv64 CONFIG=rv64-zscrypto`
 
 `build-test-sha256_reference CONFIG=rv64-baseline`
+
 `build-test-sha256_zscrypto CONFIG=rv64-zscrypto`
 
 `build-test-sha512_reference CONFIG=rv64-baseline`
+
 `build-test-sha512_zscrypto_rv64 CONFIG=rv64-zscrypto`
 
 `build-test-sha3_reference CONFIG=rv64-baseline`
+
 `build-test-sha3_zscrypto_rv64 CONFIG=rv64-zscrypto`
 
 `build-test-sm3_reference CONFIG=rv64-baseline`
+
 `build-test-sm3_zscrypto_rv64 CONFIG=rv64-zscrypto`
 
 `build-test-sm4_reference CONFIG=rv64-baseline`
+
 `build-test-sm4_zscrypto CONFIG=rv64-zscrypto`
 
 To be noticed that reference implementation is the SW implementation, while zscrypto_rv64 refers to the RISCV crypto-enabled extension.
