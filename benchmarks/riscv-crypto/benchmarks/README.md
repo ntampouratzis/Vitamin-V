@@ -7,46 +7,18 @@
 
 ## Purpose
 
-1. To evaluate a set of *popular* cryptographic algorithms on the *baseline*
-   RISC-V architecture.
+To evaluate a set of *popular* cryptographic algorithms on the *baseline* RISC-V architecture.
+
    These include:
 
    - The usual suspects from NIST:
-     AES, SHA256, SHA512, SHA3/SHAKE/CSHAKE
+     AES, SHA256, SHA512, SHA3
 
-   - Other standardised and widely used algorithms:
-     ChaCha20, SM4
-
-   - Primitive operations which are used *under the hood* in various
-     cryptographic systems and protocols:
-     Long Multiply, Modular Exponentiation etc.
-
-2. To evaluate said algorithms on extended *variants* of the RISC-V
-   architecture, and provide supporting evidence for proposed
-   standard extensions to the ISA.
-   Said variants include:
-
-   - The
-     [Bitmanip](https://github.com/riscv/riscv-bitmanip)
-     `B` extension, which is currently nearing ratification.
-
-   - The WIP `scalar` and `vector` cryptography extensions to RISC-V.
-
-3. To provide a set of *secure and efficient* reference implementations
-   of popular cryptographic algorithms for use with various
-   RISC-V architectures.
-
-4. To also provide optimised implementations for contributed cryptographic
-   algorithms to assess the general usability of the RISC-V architecture
-   from a cryptographic perspective.
-
+   - Other standardised and widely used algorithms: SM3, SM4
 
 ## Organisation
 
-- `config/` - Contains various toolchain configurations, allowing the
-    same programs to be compiled and evaluated against different target
-    architectures. Currently defined are combinations of `RV32`/`RV64`
-    with(out) the `B`itmanip extension, and with(out) the proposed
+- `config/` - Contains toolchain configurations, allowing the same programs to be compiled and evaluated against RV64 architecture with the `B`itmanip extension, and with(out) the proposed
     scalar cryptography extensions.
 
 - `share/` - General useful code / macros and instruction intrinsics.
@@ -59,13 +31,6 @@
     algorithm (SHA256/SHA512/SHA3 etc). Each algorithm may have several
     different implementations, optimising for different things, e.g. code size
     and/or performance.
-
-- Code is documented using [Doxygen](http://www.doxygen.nl/index.html).
-  You can build the doxygen documentation using:
-  ```sh
-  make doxygen CONFIG=rv64-baseline
-  ```
-  which will place the output in `$REPO_BUILD/benchmarks/doxygen`.
 
 ### Makefile Structure
 
@@ -83,13 +48,13 @@
     easy to compile against them and run the same programs on different
     target simulators / devices.
 
+
+## Build & Run
+
 - One *must* explicitly specify a build config using the `CONFIG=X` option.
   when invoking make:
     ```sh
     $> cd $REPO_HOME/benchmarks
-    $> make all CONFIG=rv32-baseline-b
-    $> make all CONFIG=rv32-baseline
-    $> make all CONFIG=rv32-zscrypto
     $> make all CONFIG=rv64-baseline-b
     $> make all CONFIG=rv64-baseline
     $> make all CONFIG=rv64-zscrypto
