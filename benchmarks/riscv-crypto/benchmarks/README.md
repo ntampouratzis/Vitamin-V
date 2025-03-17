@@ -53,7 +53,8 @@ To evaluate a set of *popular* cryptographic algorithms on the *baseline* RISC-V
 
 The available tests that are executed in gem5: 
 
- ```build-test-aes_128_reference
+ ```sh
+build-test-aes_128_reference
 build-test-aes_192_reference CONFIG=rv64-baseline
 build-test-aes_256_reference CONFIG=rv64-baseline
 build-test-aes_128_zscrypto_rv64 CONFIG=rv64-zscrypto
