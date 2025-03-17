@@ -51,7 +51,7 @@ To evaluate a set of *popular* cryptographic algorithms on the *baseline* RISC-V
 
 ## Build
 
-The available tests which are executed in gem5 are the following (reference implementation is the SW implementation, while zscrypto_rv64 refers to the RISCV crypto-enabled extension):
+The available tests that are executed in gem5: 
 
  ```build-test-aes_128_reference
 build-test-aes_192_reference CONFIG=rv64-baseline
@@ -76,6 +76,7 @@ build-test-sm3_zscrypto_rv64 CONFIG=rv64-zscrypto
 build-test-sm4_reference CONFIG=rv64-baseline
 build-test-sm4_zscrypto CONFIG=rv64-zscrypto```
 
+To be noticed that reference implementation is the SW implementation, while zscrypto_rv64 refers to the RISCV crypto-enabled extension.
 
 - One *must* explicitly specify a build config using the `CONFIG=X` option.
   when invoking make:
