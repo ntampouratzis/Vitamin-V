@@ -49,53 +49,55 @@ To evaluate a set of *popular* cryptographic algorithms on the *baseline* RISC-V
     target simulators / devices.
 
 
-## Build & Run
+## Build
+
+The available tests which are executed in gem5 are the following (reference implementation is the SW implementation, while zscrypto_rv64 refers to the RISCV crypto-enabled extension):
+
+ ```build-test-aes_128_reference
+build-test-aes_192_reference CONFIG=rv64-baseline
+build-test-aes_256_reference CONFIG=rv64-baseline
+build-test-aes_128_zscrypto_rv64 CONFIG=rv64-zscrypto
+build-test-aes_192_zscrypto_rv64 CONFIG=rv64-zscrypto
+build-test-aes_256_zscrypto_rv64 CONFIG=rv64-zscrypto
+
+build-test-sha256_reference CONFIG=rv64-baseline
+build-test-sha256_zscrypto CONFIG=rv64-zscrypto
+
+build-test-sha512_reference CONFIG=rv64-baseline
+build-test-sha512_zscrypto_rv64 CONFIG=rv64-zscrypto
+
+
+build-test-sha3_reference CONFIG=rv64-baseline
+build-test-sha3_zscrypto_rv64 CONFIG=rv64-zscrypto
+
+build-test-sm3_reference CONFIG=rv64-baseline
+build-test-sm3_zscrypto_rv64 CONFIG=rv64-zscrypto
+
+build-test-sm4_reference CONFIG=rv64-baseline
+build-test-sm4_zscrypto CONFIG=rv64-zscrypto```
+
 
 - One *must* explicitly specify a build config using the `CONFIG=X` option.
   when invoking make:
     ```sh
-    $> cd $REPO_HOME/benchmarks
-    $> make all CONFIG=rv64-baseline-b
-    $> make all CONFIG=rv64-baseline
-    $> make all CONFIG=rv64-zscrypto
+    $> cd riscv-crypto
+    $> source ./bin/conf.sh #setup the project workspace
+    $> cd benchmarks
+    $> make build-test-sha256_zscrypto CONFIG=rv64-zscrypto
     ```
 
   These configs are kept in the `$REPO_HOME/benchmarks/config/` directory,
   and specify different compiler and architecture flag combinations.
 
-  - **Note:** Not all targets are expected to build for all configurations.
-    E.g. the SHA512 `zscrypto` benchmark will not work on an `rv32-*`
-    target, since it requires 64-bit only instructions.
-
-- Build results will be placed in `$REPO_BUILD/benchmarks/[CONFIG]/*`.
-
-- For those without tab-completion, running
-  ```sh
-  $> make CONFIG=rv64-baseline print-build-targets
-  $> make CONFIG=rv64-baseline print-all-targets
-  ```
-  Will tell you which build / simulation targets there are.
+- Build results will be placed in `riscv-crypto/build/benchmarks/rv64-zscrypto/bin/test`.
 
 ### Running tests:
 
 - Tests live in the `test/` directory, with one test *per algorithm*.
   A file is then linked against each different algorithm static library.
 
-- To run all of the tests for a given config:
-  ```sh
-  $> make CONFIG=rv64-baseline run
+- To run the above test: 
   ```
-
-- Or see which run targets are available:
-  ```sh
-  $> make CONFIG=rv64-baseline print-run-targets
+  $> riscv-crypto/build/benchmarks/rv64-zscrypto/bin/test
+  $> ./test_hash_sha256-sha256_zscrypto.elf
   ```
-
-- The results of a run are placed in
-  `$REPO_BUILD/benchmarks/[CONFIG]/log/test/*`.
-  Each log file contains the `stdout` of the test, including instruction
-  execution counts.
-
-- Each test *prints* python3 code to `stdout`. This python code is then
-  executed to check that the algorithm produced the correct results
-  against a completely different implementation.
