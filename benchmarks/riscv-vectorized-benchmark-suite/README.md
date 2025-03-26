@@ -17,136 +17,30 @@ The updated kernels have been tested using GCC/G++ v13.1 within the gem5 v24.1.0
 | spmv              | High Performance Computing    | BLAS                  |
 
 
-## Building the rv64gcv baremetal toolchain with LLVM
 
-To compile the suite it is required to install the [RISC-V GNU Compiler Toolchain] (https://github.com/riscv-collab/riscv-gnu-toolchain). Next lines summarizes the commands to build the rv64gcv baremetal toolchain with LLVM. We strongly recommend to look at the official toolchain repository for more details.
+### Compile using gcc/g++ with RISCV Vector Version
 
+To compile matmul application run the command make followed by the application name
+```
+cd _matmul
+make serial
+make vector 
+```
+This will compile two versions of the application, namely serial, vector with m1_t, and vector with m8_t (our version).
 
-Set the installation PATH 
-```
-export RISCV="/your_path/build/riscv"
-export PATH="$RISCV:$PATH"
-```
+It produces the ```matmul_serial.exe  matmul_vector.exe  matmul_vector_m8_T.exe``` inside bin directory.
 
-Cloning the repository 
+### Running the Vectorized apps
 ```
-git clone https://github.com/riscv/riscv-gnu-toolchain
-```
-
-Install dependencies
-```
-sudo apt-get install autoconf automake autotools-dev curl python3 python3-pip libmpc-dev libmpfr-dev libgmp-dev gawk build-essential bison flex texinfo gperf libtool patchutils bc zlib1g-dev libexpat-dev ninja-build git cmake libglib2.0-dev libslirp-dev
-```
-
-Install RISC-V GNU Compiler Toolchain 
-```
-cd riscv-gnu-toolchain
-./configure --prefix=$RISCV --enable-llvm --disable-linux --with-arch=rv64gcv --with-cmodel=medany
-make -j37 all build-sim SIM=qemu
+./bin/matmul_serial.exe input/data_8192_Vitamin.in
+./bin/matmul_vector.exe input/data_8192_Vitamin.in
+./bin/matmul_vector_m8_T.exe input/data_8192_Vitamin.in
 ```
 
-
-### The RISC-V vector C intrinsics 
-
-As mentioned above, RiVEC implements the lastest riscv intrinsics for rvv-1.0.  RISC-V vector C intrinsics provide users interfaces in the C language level to directly leverage the RISC-V "V" extension.  More details can be found [here] (https://github.com/riscv-non-isa/rvv-intrinsic-doc/blob/main/doc/rvv-intrinsic-spec.adoc).
-
-Here a nice instrinsic viewer tool https://dzaima.github.io/intrinsics-viewer
-
-### Setting up the environment
-
-The Suite includes a makefile to compile every application, in order to use it, you must define the path to the RISC-V vector compiler.
-
-Setting the Vector Compiler path
+You can generate any matrix multiplication size using:
 ```
-export RISCV="/your_path/build/riscv"
-export PATH="$RISCV:$PATH"
+perl gendata.pl --dimM=128 --dimK=128 --dimN=128 --seed=42 > data_128.in
 ```
-
-### Compile using  clang for RISCV Vector Version
-
-To compile any application run the command make followed by the application name
-```
-make application 
-```
-For example to compile blackscholes:
-```
-make blackscholes 
-```
-This will compile two versions of the application, namely serial and vector versions.
-
-Also you can compile all the applications by typing:
-```
-make all 
-```
-
-## Running the Vectorized apps
-
-To be able to run all the apps, you must install Spike, qemu, and/or gem5. All the applications run succesfully in spike and gem5. Applications that does not require an input file, or generate an output file are able to run on qemu as well.
-
-### Installing Spike, qemu, and gem5
-
-All the RiVEC applications can run on [Spike] (https://github.com/riscv-software-src/riscv-isa-sim).  We strongly recommend to look at the official Spike RISC-V ISA Simulator repository for more details.
-
-Install Spike RISC-V ISA Simulator
-```
-sudo apt-get install device-tree-compiler libboost-regex-dev libboost-system-dev
-git clone https://github.com/riscv-software-src/riscv-isa-sim.git
-cd riscv-isa-sim/
-mkdir build
-cd build/
-../configure --prefix=$RISCV --with-arch=rv64gcv
-make -j17
-make install
-```
-
-### Installing Qemu
-
-When building the rv64gcv baremetal toolchain with LLVM with the above provided commands, it was indicated to also install QEMU
-
-### Running the apps
-
-The suite provides an interactive script (run.sh) which provides a simple way to execute every app.
-
-First run the following command:
-```
-source run.sh
-```
-That will display all the applications available, next it ask if do you want to run the serial or vectorized version, followed by the simulation size. Some applications creates an output file located in the folder "output" inside each application folder.
-
-
-Running Axpy:
-```
-source run.sh
-
-----------------------------------------------------------------------------------
-RiVec Benchmark Suite
-----------------------------------------------------------------------------------
-
-select one application to run [axpy blackscholes canneal jacobi-2d lavaMD matmul 
-swaptions streamcluster somier particlefilter pathfinder]: axpy
- 
-----------------------------------------------------------------------------------
-AXPY
-----------------------------------------------------------------------------------
- 
-do you want to run the serial or vectorized version [serial vector]: vector
-select the simulation size [tiny small medium large]: tiny
- 
-----------------------------------------------------------------------------------
-RUNNING AXPY
-----------------------------------------------------------------------------------
-command: /home/ralc/Desktop/RISC-V/build/riscv/bin/spike --isa=rv64gcv pk bin/axpy_vector.exe 256
-----------------------------------------------------------------------------------
-init_vector time: 0.002524
-doing reference axpy , vector size 262144
-axpy_serial time: 0.000525
-doing vector axpy, vector size 262144
-axpy_intrinsics time: 0.001442
-done
-Result ok !!!
-
-```
-
 ### Simulation sizes 
 
 There are provided 4 different simulation sizes (arguments to run the application).
