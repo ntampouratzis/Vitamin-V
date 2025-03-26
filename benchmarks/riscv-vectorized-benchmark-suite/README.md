@@ -17,6 +17,26 @@ The updated kernels have been tested using GCC/G++ v13.1 within the gem5 v24.1.0
 | spmv              | High Performance Computing    | BLAS                  |
 
 
+## Axpy
+### Compile using gcc/g++ with RISCV Vector Version
+
+To compile axpy application run the command make followed by the application name
+```
+cd _axpy
+make serial
+make vector
+make vector_m8
+```
+This will compile 3 versions of the application, namely serial, vector with m1_t, and vector with m8_t (our version).
+
+It produces the ```axpy_serial.exe  axpy_vector.exe  axpy_vector_m8.exe``` inside bin directory.
+
+### Running the axpy
+```
+./bin/axpy_serial.exe 4096
+./bin/axpy_vector.exe 4096
+./bin/axpy_vector_m8.exe 4096
+```
 
 ## Matmul
 ### Compile using gcc/g++ with RISCV Vector Version
@@ -27,7 +47,7 @@ cd _matmul
 make serial
 make vector 
 ```
-This will compile two versions of the application, namely serial, vector with m1_t, and vector with m8_t (our version).
+This will compile 3 versions of the application, namely serial, vector with m1_t, and vector with m8_t (our version).
 
 It produces the ```matmul_serial.exe  matmul_vector.exe  matmul_vector_m8_T.exe``` inside bin directory.
 
