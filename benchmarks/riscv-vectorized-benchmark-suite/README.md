@@ -2,38 +2,15 @@
 
 ## Overview
 
-The RiVEC Benchmark Suite is a collection composed of data-parallel applications from different domains. The suite focuses on benchmarking vector microarchitectures. Current implementation is targeting RISC-V Architectures; however, it can be easily ported to any Vector/SIMD ISA thanks to a wrapper library which we developed to map vector intrinsics and math functions to the target architecture.
-
-The benchmark suite with all its applications and input sets is available as open source free of charge. Some of the benchmark programs have their own licensing terms which might limit their use in some cases.
-
-RiVEC implements the lastest riscv intrinsics for rvv-1.0. It can be compiled with the latest [riscv-collab/riscv-gnu-toolchain](https://github.com/riscv-collab/riscv-gnu-toolchain). RiVEC has been successfully tested on Spike RISC-V ISA Simulator, qemu RISC-V System emulator, and gem5 simulator.
-
-Master branch holds the most updated version (rvv-v1.0) compatible with latest instrinsics and toolchain. Additionaly, there are two more available versions:
-
-[rvv-0.7](https://github.com/RALC88/riscv-vectorized-benchmark-suite/tree/rvv-0.7) which is based on  RISC-V V vector extension v0.7. This version can be only compiled by the LLVM from Barcelona Supercomputing Center. Instrinsics also corresponds to that specific compiler.
-
-[rvv-1.0-PLCTLab](https://github.com/RALC88/riscv-vectorized-benchmark-suite/tree/rvv-1.0-PLCTLab) which is based on  RISC-V V vector extension v1.0. This version can be only compiled by the LLVM from PLCT. Instrinsics also corresponds to that specific compiler.
-
-
-If you use this software or a modified version of it for your research, please cite the paper:
-Cristóbal Ramírez, César Hernandez, Oscar Palomar, Osman Unsal, Marco Ramírez, and Adrián Cristal. 2020. A RISC-V Simulator and Benchmark Suite for Designing and Evaluating Vector Architectures. ACM Trans. Archit. Code Optim. 17, 4, Article 38 (October 2020), 29 pages. https://doi.org/10.1145/3422667
+This version of the [RiVEC Benchmark Suite](https://github.com/RALC88/riscv-vectorized-benchmark-suite) includes optimizations for the Axpy, matmul, and spmv kernels, now adapted to use m8_t instead of m1_t to better exploit wider vector configurations under RVV 1.0 (RISC-V Vector Extension 1.0). Additionally, the matmul kernel now uses a transposed B matrix layout to improve memory access patterns and computational efficiency. These enhancements are part of work supported by the Vitamin_V H2020 project.
 
 ## Vectorized apps
 
 | Application Name  | Application Domain            | Algorithmic Model     | Taken From  |
 | ----------------- |------------------------------ | --------------------- | ----------- |
 | Axpy              | High Performance Computing    | BLAS                  | -           |
-| Blackscholes      | Financial Analysis            | Dense Linear Algebra  | PARSEC      |
-| Canneal           | Engineering                   | Unstructured Grids    | PARSEC      |
-| LavaMD2           | Molecular Dynamics            | N-Body                | Rodinia     |
 | matmul            | High Performance Computing    | BLAS                  | -           |
 | spmv              | High Performance Computing    | BLAS                  | -           |
-| Particle Filter   | Medical Imaging               | Structured Grids      | Rodinia     |
-| Somier            | Physics Simulation            | Dense Linear Algebra  | -           |
-| Jacobi-2D         | Engineering                   | Dense Linear Algebra  | PolyBench   |
-| Pathfinder        | Grid Traversal                | Dynamic Programming   | Rodinia     |
-| Streamcluster     | Data Mining                   | Dense Linear Algebra  | PARSEC      |
-| Swaptions         | Financial Analysis            | MapReduce Regular     | PARSEC      |
 
 
 ## Building the rv64gcv baremetal toolchain with LLVM
