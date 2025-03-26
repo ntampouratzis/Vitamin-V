@@ -1,7 +1,7 @@
 /*************************************************************************
-* Vectorized Axpy Kernel
-* Author: Jesus Labarta
-* Barcelona Supercomputing Center
+ * Nikolaos Tampouratzis
+ * ntampouratzis@ihu.gr / tampouratzis@exapsys.eu
+ * EXAscale Performance SYStems
 *************************************************************************/
 
 #include <stdlib.h>
