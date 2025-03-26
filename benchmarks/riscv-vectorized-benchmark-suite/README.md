@@ -10,11 +10,11 @@ The updated kernels have been tested using GCC/G++ v13.1 within the gem5 v24.1.0
 
 ## Vectorized apps
 
-| Application Name  | Application Domain            | Algorithmic Model     | Taken From  |
-| ----------------- |------------------------------ | --------------------- | ----------- |
-| Axpy              | High Performance Computing    | BLAS                  | -           |
-| matmul            | High Performance Computing    | BLAS                  | -           |
-| spmv              | High Performance Computing    | BLAS                  | -           |
+| Application Name  | Application Domain            | Algorithmic Model     |
+| ----------------- |------------------------------ | --------------------- |
+| Axpy              | High Performance Computing    | BLAS                  |
+| matmul            | High Performance Computing    | BLAS                  |
+| spmv              | High Performance Computing    | BLAS                  |
 
 
 ## Building the rv64gcv baremetal toolchain with LLVM
