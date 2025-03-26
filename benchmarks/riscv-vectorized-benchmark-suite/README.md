@@ -2,7 +2,11 @@
 
 ## Overview
 
-This version of the [RiVEC Benchmark Suite](https://github.com/RALC88/riscv-vectorized-benchmark-suite) includes optimizations for the High Performance Computing (Axpy, matmul, and spmv) kernels, now adapted to use m8_t instead of m1_t to better exploit wider vector configurations under RVV 1.0 (RISC-V Vector Extension 1.0). Additionally, the matmul kernel now uses a transposed B matrix layout to improve memory access patterns and computational efficiency. These enhancements are part of work supported by the Vitamin_V H2020 project.
+This version of the [RiVEC Benchmark Suite](https://github.com/RALC88/riscv-vectorized-benchmark-suite) includes optimizations for the High Performance Computing (Axpy, matmul, and spmv) kernels, now adapted to use m8_t instead of m1_t to better exploit wider vector configurations under RVV 1.0 (RISC-V Vector Extension 1.0). Additionally, the matmul kernel now uses a transposed B matrix layout to improve memory access patterns and computational efficiency. These enhancements are part of work supported by the Vitamin_V H2020 project. 
+
+The updated kernels have been tested using GCC/G++ v13.1 within the gem5 v24.1.0.1 simulator environment and are also compatible with physical RISC-V hardware that supports RVV 1.0.
+
+
 
 ## Vectorized apps
 
