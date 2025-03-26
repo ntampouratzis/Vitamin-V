@@ -1,7 +1,7 @@
 /*
- * Neiel Israel Leyva Santes
+ * Nikolaos Tampouratzis
  * ntampouratzis@ihu.gr / tampouratzis@exapsys.eu
- * Barcelona Supercomputing Center
+ * EXAscale Performance SYStems
  *
  * SpMV Vector Implementation.
  * Sparse Matrix-Vector Multiplication (SpMV) is a mathematical operation
