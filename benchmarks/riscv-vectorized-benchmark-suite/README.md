@@ -1,4 +1,4 @@
-# RiVEC Bencmark Suite
+# Modified RiVEC Benchmark Suite
 
 ## Overview
 
