@@ -1,6 +1,6 @@
 /*
  * Neiel Israel Leyva Santes
- * neiel.leyva@bsc.es
+ * ntampouratzis@ihu.gr / tampouratzis@exapsys.eu
  * Barcelona Supercomputing Center
  *
  * SpMV Vector Implementation.
