@@ -18,6 +18,7 @@ The updated kernels have been tested using GCC/G++ v13.1 within the gem5 v24.1.0
 
 
 
+## Matmul
 ### Compile using gcc/g++ with RISCV Vector Version
 
 To compile matmul application run the command make followed by the application name
