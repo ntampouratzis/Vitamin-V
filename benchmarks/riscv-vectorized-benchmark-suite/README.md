@@ -63,11 +63,26 @@ You can generate any matrix multiplication size using:
 perl gendata.pl --dimM=128 --dimK=128 --dimN=128 --seed=42 > data_128.in
 ```
 
+## Spmv
+### Compile using gcc/g++ with RISCV Vector Version
 
+To compile spmv application run the command make followed by the application name
+```
+cd _spmv
+make serial
+make vector
+```
+This will compile 3 versions of the application, namely serial, vector with m1_t, and vector with m8_t (our version).
 
-## Acknowledgements
-We thank the [European Processor Initiative](https://www.european-processor-initiative.eu/) (EPI) project, and the Barcelona Supercomputing Center compiler team, specially to Roger Ferrer who have always support us and solved our doubts about compiler-related issues.
+It produces the ```spmv_serial.exe  spmv_vector.exe  spmv_vector_m8.exe``` inside bin directory.
+
+### Running the spmv
+```
+./bin/spmv_serial.exe input/venkat25.mtx input/venkat25.verif
+./bin/spmv_vector.exe input/venkat25.mtx input/venkat25.verif
+./bin/spmv_vector_m8.exe input/venkat25.mtx input/venkat25.verif
+```
 
 ## Contact
-Cristobal Ramirez
-cristobal.ramirez.lazo@gmail.com
+Nikolaos Tampouratzis
+ntampouratzis@ihu.gr / tampouratzis@exapysys.eu
