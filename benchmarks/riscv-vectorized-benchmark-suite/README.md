@@ -18,7 +18,7 @@ The updated kernels have been tested using GCC/G++ v13.1 within the gem5 v24.1.0
 
 
 ## Axpy
-### Compile using gcc/g++ with RISCV Vector Version
+### Compile using gcc/g++ with RVV 1.0
 
 To compile axpy application run the command make followed by the application name
 ```
@@ -39,7 +39,7 @@ It produces the ```axpy_serial.exe  axpy_vector.exe  axpy_vector_m8.exe``` insid
 ```
 
 ## Matmul
-### Compile using gcc/g++ with RISCV Vector Version
+### Compile using gcc/g++ with RVV 1.0
 
 To compile matmul application run the command make followed by the application name
 ```
@@ -64,7 +64,7 @@ perl gendata.pl --dimM=128 --dimK=128 --dimN=128 --seed=42 > data_128.in
 ```
 
 ## Spmv
-### Compile using gcc/g++ with RISCV Vector Version
+### Compile using gcc/g++ with RVV 1.0
 
 To compile spmv application run the command make followed by the application name
 ```
