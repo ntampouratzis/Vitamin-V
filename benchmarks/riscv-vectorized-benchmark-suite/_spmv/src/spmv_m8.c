@@ -38,9 +38,9 @@ void spmv_intrinsics(const size_t nrows, double *a, uint64_t *ia, uint64_t *ja, 
 
                 vfloat64m8_t val_vec = __riscv_vle64_v_f64m8(&a[idx+colid], gvl); // Load matrix values (8 regs - 32 double)
 
-                vuint64m8_t vec64 = __riscv_vle64_v_u64m8(&ja[idx+colid], gvl); //(4 regs - 32 integer)
+                vuint64m8_t vec64 = __riscv_vle64_v_u64m8(&ja[idx+colid], gvl); //(8 regs - 32 uint64)
 
-                vec64 = __riscv_vsll_vx_u64m8(vec64, 3, gvl); //(4 regs - 32 integer)
+                vec64 = __riscv_vsll_vx_u64m8(vec64, 3, gvl); //(8 regs - 32 uint64)
 
                 vfloat64m8_t x_vec = __riscv_vluxei64_v_f64m8(x, vec64, gvl); // Gather x values (8 regs - 32 double)
 
