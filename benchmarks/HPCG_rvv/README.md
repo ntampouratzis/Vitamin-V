@@ -41,11 +41,14 @@ cd benchmarks/HPCG_rvv/
 mkdir build
 cd build
 ../configure Linux_MPI_RVV
-make -j
+make -j```
 
 ## Execution ##
 
 You can execute the HPCG using:
 
-
+```
+cd benchmarks/HPCG_rvv/
+mpirun -n 8 build/bin/xhpcg --nx=16 --ny=16 --nz=16 --npx=2 --npy=2 --npz=2 --rt=1
+```
 
