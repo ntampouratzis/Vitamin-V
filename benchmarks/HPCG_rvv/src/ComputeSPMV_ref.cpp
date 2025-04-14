@@ -8,6 +8,8 @@
 // Jack Dongarra     (dongarra@eecs.utk.edu)
 // Piotr Luszczek    (luszczek@eecs.utk.edu)
 //
+//
+// RVV: Nikolaos Tampouratzis (ntampouratzis@ihu.gr)
 // ***************************************************
 //@HEADER
 
