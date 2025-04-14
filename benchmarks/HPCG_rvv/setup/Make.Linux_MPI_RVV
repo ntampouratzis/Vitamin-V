@@ -1,17 +1,10 @@
 #HEADER
-#  -- High Performance Conjugate Gradient Benchmark (HPCG)
-#     HPCG - 3.1 - March 28, 2019
+#  -- RVV 1.0 enabled - High Performance Conjugate Gradient Benchmark (HPCG)
+#     RVV 1.0 enabled HPCG - 3.1 - April 15, 2025
 
-#     Michael A. Heroux
-#     Scalable Algorithms Group, Computing Research Division
-#     Sandia National Laboratories, Albuquerque, NM
-#
-#     Piotr Luszczek
-#     Jack Dongarra
-#     University of Tennessee, Knoxville
-#     Innovative Computing Laboratory
-#
-#     (C) Copyright 2013-2019 All Rights Reserved
+#     Nikolaos Tampouratzis
+#     EXAscale Performance SYStems
+#     International Hellenic University
 #
 #
 #  -- Copyright notice and Licensing terms:
