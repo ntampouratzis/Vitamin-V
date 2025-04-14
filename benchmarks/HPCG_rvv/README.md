@@ -41,7 +41,8 @@ cd benchmarks/HPCG_rvv/
 mkdir build
 cd build
 ../configure Linux_MPI_RVV
-make -j```
+make -j
+```
 
 ## Execution ##
 
