@@ -1,41 +1,32 @@
 ########################################################
-# High Performance Conjugate Gradient Benchmark (HPCG) #
+# RVV-enabled High Performance Conjugate Gradient Benchmark (HPCG) #
 ########################################################
 
 Jack Dongarra and Michael Heroux and Piotr Luszczek
 
 Revision: 3.1
 
-Date: March 28, 2019
+Date: April 15, 2025
 
 ## Introduction ##
 
-HPCG is a software package that performs a fixed number of multigrid preconditioned
-(using a symmetric Gauss-Seidel smoother) conjugate gradient (PCG) iterations using double
-precision (64 bit) floating point values.
+This fork of HPCG integrates support for the RISC-V Vector Extension (RVV) 1.0 to accelerate core computational routines on RISC-V hardware. RVV is a powerful vector extension that allows for scalable data-level parallelism across different implementations, and we've leveraged it to optimize the most compute-intensive parts of the benchmark. 
+To maximize vector throughput and take advantage of wider vector registers, we use LMUL=8 across all vectorized routines. This setting allows for greater performance when the hardware supports large vector lengths, which is especially beneficial for workloads dominated by streaming and sparse linear algebra operations. These changes maintain compatibility with the original algorithmic behavior of HPCG while delivering significantly improved performance on RVV-enabled processors. 
 
-The HPCG rating is is a weighted GFLOP/s (billion floating operations per second) value
-that is composed of the operations performed in the PCG iteration phase over
-the time taken.  The overhead time of problem construction and any modifications to improve
-performance are divided by 500 iterations (the amortization weight) and added to the runtime.
 
-Integer arrays have global and local
-scope (global indices are unique across the entire distributed memory system,
-local indices are unique within a memory image).  Integer data for global/local
-indices have three modes:
+### RVV 1.0 Optimized Kernels
 
-* 32/32 - global and local integers are 32-bit
-* 64/32 - global integers are 64-bit, local are 32-bit
-* 64/64 - global and local are 64-bit.
+The following computational kernels have been optimized using RISC-V Vector Extension (RVV) 1.0 intrinsics. All implementations use LMUL=8 for improved performance on supported hardware.
 
-These various modes are required in order to address sufficiently big problems
-if the range of indexing goes above 2^31 (roughly 2.1B), or to conserve storage
-costs if the range of indexing is less than 2^31.
+| File Name                     | Description                                  | RVV Optimization | LMUL Used |
+|------------------------------|----------------------------------------------|------------------|-----------|
+| ComputeDotProduct_ref.cpp    | Parallel dot product of two vectors          | Yes              | 8         |
+| ComputeProlongation_ref.cpp  | Prolongation operator (interpolation)        | Yes              | 8         |
+| ComputeRestriction_ref.cpp   | Restriction operator (coarse grid transfer)  | Yes              | 8         |
+| ComputeSYMGS_ref.cpp         | Symmetric Gauss-Seidel smoothing             | Yes              | 8         |
+| ComputeWAXPBY_ref.cpp        | Linear combination of vectors (WAXPBY)       | Yes              | 8         |
 
-The  HPCG  software  package requires the availibility on your system of an
-implementation of the  Message Passing Interface (MPI) if enabling the MPI
-build of HPCG, and a compiler that supports OpenMP syntax. An implementation
-compliant with MPI version 1.1 is sufficient.
+The official HPCG GitHub: https://github.com/hpcg-benchmark/hpcg
 
 ## Installation ##
 
