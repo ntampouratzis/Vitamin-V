@@ -1,0 +1,165 @@
+
+//@HEADER
+// ***************************************************
+//
+// HPCG: High Performance Conjugate Gradient Benchmark
+//
+// Contact:
+// Michael A. Heroux ( maherou@sandia.gov)
+// Jack Dongarra     (dongarra@eecs.utk.edu)
+// Piotr Luszczek    (luszczek@eecs.utk.edu)
+//
+// ***************************************************
+//@HEADER
+
+/*!
+ @file ComputeWAXPBY_ref.cpp
+
+ HPCG routine
+ */
+
+#include "ComputeWAXPBY_ref.hpp"
+#ifndef HPCG_NO_OPENMP
+#include <omp.h>
+#endif
+#include <cassert>
+
+#define RVV
+
+#ifdef RVV
+#include <riscv_vector.h> // Ensure to include RISC-V vector header
+#endif
+
+
+/*!
+  Routine to compute the update of a vector with the sum of two
+  scaled vectors where: w = alpha*x + beta*y
+
+  This is the reference WAXPBY impmentation.  It CANNOT be modified for the
+  purposes of this benchmark.
+
+  @param[in] n the number of vector elements (on this processor)
+  @param[in] alpha, beta the scalars applied to x and y respectively.
+  @param[in] x, y the input vectors
+  @param[out] w the output vector.
+
+  @return returns 0 upon success and non-zero otherwise
+
+  @see ComputeWAXPBY
+*/
+int ComputeWAXPBY_ref(const local_int_t n, const double alpha, const Vector & x,
+    const double beta, const Vector & y, Vector & w) {
+
+  assert(x.localLength>=n); // Test vector lengths
+  assert(y.localLength>=n);
+
+  const double * const xv = x.values;
+  const double * const yv = y.values;
+  double * const wv = w.values;
+
+  if (alpha==1.0) {
+#ifndef HPCG_NO_OPENMP
+    #pragma omp parallel for
+#endif
+#ifndef RVV
+    for (local_int_t i=0; i<n; i++) wv[i] = xv[i] + beta * yv[i];
+#else
+
+    size_t vl;
+    vfloat64m8_t vec_xv, vec_yv, vec_wv;
+
+    // Vectorized computation using RVV
+	for (int i = 0; i < n; i += vl) {
+			// Set vector length for remaining elements
+			vl = __riscv_vsetvl_e64m8(n - i);
+
+			// Load xv elements into vector registers
+			vec_xv = __riscv_vle64_v_f64m8(&xv[i], vl);
+
+            // Load yv elements into vector registers
+			vec_yv = __riscv_vle64_v_f64m8(&yv[i], vl);
+
+            // Compute beta * y vector.
+            vec_yv = __riscv_vfmul_vf_f64m8(vec_yv, beta, vl);
+
+             // Perform element-wise addition: x + (beta * y)
+            vec_wv = __riscv_vfadd_vv_f64m8(vec_xv, vec_yv, vl);
+
+            // Store the result back to memory.
+            __riscv_vse64_v_f64m8(&wv[i], vec_wv, vl);
+
+    }
+#endif
+  } else if (beta==1.0) {
+#ifndef HPCG_NO_OPENMP
+    #pragma omp parallel for
+#endif
+#ifndef RVV
+    for (local_int_t i=0; i<n; i++) wv[i] = alpha * xv[i] + yv[i];
+#else
+
+    size_t vl;
+    vfloat64m8_t vec_xv, vec_yv, vec_wv;
+
+    // Vectorized computation using RVV
+	for (int i = 0; i < n; i += vl) {
+			// Set vector length for remaining elements
+			vl = __riscv_vsetvl_e64m8(n - i);
+
+			// Load xv elements into vector registers
+			vec_xv = __riscv_vle64_v_f64m8(&xv[i], vl);
+
+            // Load yv elements into vector registers
+			vec_yv = __riscv_vle64_v_f64m8(&yv[i], vl);
+
+            // Compute alpha * x vector.
+            vec_xv = __riscv_vfmul_vf_f64m8(vec_xv, alpha, vl);
+
+             // Perform element-wise addition: x * alpha + y
+            vec_wv = __riscv_vfadd_vv_f64m8(vec_xv, vec_yv, vl);
+
+            // Store the result back to memory.
+            __riscv_vse64_v_f64m8(&wv[i], vec_wv, vl);
+
+    }
+#endif
+  } else  {
+#ifndef HPCG_NO_OPENMP
+    #pragma omp parallel for
+#endif
+#ifndef RVV
+    for (local_int_t i=0; i<n; i++) wv[i] = alpha * xv[i] + beta * yv[i];
+#else
+
+    size_t vl;
+    vfloat64m8_t vec_xv, vec_yv, vec_wv;
+
+    // Vectorized computation using RVV
+	for (int i = 0; i < n; i += vl) {
+			// Set vector length for remaining elements
+			vl = __riscv_vsetvl_e64m8(n - i);
+
+			// Load xv elements into vector registers
+			vec_xv = __riscv_vle64_v_f64m8(&xv[i], vl);
+
+            // Load yv elements into vector registers
+			vec_yv = __riscv_vle64_v_f64m8(&yv[i], vl);
+
+            // Compute alpha * x vector.
+            vec_xv = __riscv_vfmul_vf_f64m8(vec_xv, alpha, vl);
+
+            // Compute beta * y vector.
+            vec_yv = __riscv_vfmul_vf_f64m8(vec_yv, beta, vl);
+
+             // Perform element-wise addition: (x * alpha) + (beta * y)
+            vec_wv = __riscv_vfadd_vv_f64m8(vec_xv, vec_yv, vl);
+
+            // Store the result back to memory.
+            __riscv_vse64_v_f64m8(&wv[i], vec_wv, vl);
+
+    }
+#endif
+  }
+
+  return 0;
+}
