@@ -1,0 +1,61 @@
+
+* Ubuntu 22.04 (fs_linux.py)
+$GEM5/build/RISCV/gem5.fast $GEM5/configs/example/riscv/fs_linux.py --kernel=/home/ntampouratzis/COSSIM/kernels/binaries/riscv-bootloader-vmlinux-5.10-PCI --disk-image=/home/ntampouratzis/COSSIM/kernels/disks/Vitamin-V/riscv-ubuntu-node0.img --script=$GEM5/configs/boot/COSSIM/script0_riscv_standalone.rcS
+
+
+* Ubuntu 22.04 (riscvmatched-fs.py)
+$GEM5/build/RISCV/gem5.fast $GEM5/configs/example/gem5_library/riscvmatched-fs.py --kernel=riscv-vmlinux-6.5.5 --disk-image=riscv-ubuntu-lammps-node0.img --script=$GEM5/configs/boot/COSSIM/script0_riscv_standalone.rcS
+
+* Ubuntu 22.04 (riscv-ubuntu-run.py)
+$GEM5/build/RISCV/gem5.fast $GEM5/configs/example/gem5_library/riscv-ubuntu-run.py --kernel=riscv-vmlinux-6.5.5 --disk-image=riscv-ubuntu-lammps-node0.img --script=$GEM5/configs/boot/COSSIM/script0_riscv_standalone.rcS
+
+* Buildroot
+$GEM5/build/RISCV/gem5.fast --listener-mode=on -r -d node0 $GEM5/configs/example/riscv/fs_linux.py --kernel=/home/ntampouratzis/COSSIM/kernels/binaries/riscv-bootloader-vmlinux-5.10-PCI --disk-image=/home/ntampouratzis/COSSIM/kernels/disks/Vitamin-V/rootfs.ext4  (root=/dev/vda   working with eth0)
+
+* Buildroot build
+git clone git://git.buildroot.net/buildroot
+cd buildroot/
+make menuconfig
+*Follow Section 4 from VOSys-Guide*
+unset LD_LIBRARY_PATH
+make
+cd output/images
+
+Delete 316 and change 315 to "root=/dev/vda" from /home/ntampouratzis/gem5_v22.0.0.2/gem5/configs/example/riscv/fs_linux.py
+
+
+GEM5 25.0.0.1 is used.
+
+The following changes have been performed in order to integrate GEM5 with the other COSSIM parts through CERTI 4.0.0 HLA.
+
+1.  Changing the file /gem5/src/SConscript
+2.  Adding files HLA_GEM5.cc | .hh in /gem5/src/dev/net
+3.  Adding file /gem5/src/dev/net/COSSIMetherlink.cc | .hh
+4.  Changing the file /gem5/src/dev/net/SConscript
+5.  Changing the file /gem5/src/dev/net/Ethernet.py
+6.  Changing the file /gem5/src/python/m5/params.py
+7.  Changing the file /gem5/configs/common/Options.py
+8.  Changing the file /gem5/configs/common/FSConfig.py
+9.  Changing the file /gem5/configs/example/fs.py (configs/deprecated/example)
+10. Changing the file /gem5/configs/example/arm/starter_fs.py
+11. Changing the file /gem5/configs/example/arm/fs_bigLITTLE.py
+12. Changing the file /gem5/configs/common/Simulation.py (McPat execution)
+13. Changing the file /gem5/src/dev/x86/SouthBridge.py
+14. Changing the file /gem5/src/dev/x86/Pc.py
+15. Changing the file /gem5/configs/example/arm/devices.py
+16. Changing the file /gem5/src/dev/riscv/HiFive.py
+17. Changing the file /gem5/configs/example/gem5_library/riscv-fs.py
+18. Changing the file /gem5/configs/example/gem5_library/riscv-ubuntu-run.py
+19. Changing the file /gem5/src/python/gem5/components/boards/riscv_board.py
+20. Changing the file /gem5/src/python/gem5/prebuilt/riscvmatched/riscvmatched_board.py
+21. Changing the file /gem5/configs/example/gem5_library/riscvmatched-fs.py
+22. Changing the file /gem5/src/arch/riscv/RiscvISA.py (K extensions)
+
+23. Changing the file /gem5/src/python/gem5/components/boards/arm_board.py
+24. Changing the file /gem5/configs/example/gem5_library/arm-ubuntu-run.py
+
+Changes in files (to add PCI & e1000):
+/home/ntampouratzis/gem5_v22.0.0.2/gem5/configs/example/riscv/fs_linux.py
+/home/ntampouratzis/gem5_v22.0.0.2/gem5/src/dev/riscv/HiFive.py (same as 16)
+
+

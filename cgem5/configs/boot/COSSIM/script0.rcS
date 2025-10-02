@@ -1,0 +1,31 @@
+#!/bin/sh
+nproc
+ifconfig eth0 hw ether 00:90:00:00:00:00
+ifconfig lo 127.0.0.1                             #Configure the localhost
+ifconfig eth0 192.168.0.2                            #Configure the Ethernet
+ifconfig eth0 netmask 255.255.255.0               #Configure the Netmask
+ulimit -c unlimited
+
+sleep 1
+
+/etc/init.d/xinetd start #Initialize RSH server
+
+#sleep 1
+
+# Here you can put your application
+hostname node0
+
+#sleep 1
+
+#export PATH=$PATH:/opt/vef_prospector/bin
+#export LD_LIBRARY_PATH=:/opt/vef_prospector/lib/
+uname -p
+cd /home/ubuntu
+m5 resetstats
+mpirun -launcher rsh -n 6 -f host_file ./mpi_only_rvv
+ls
+sync
+# END Here you can put your application
+
+#exec /bin/sh
+m5 exit

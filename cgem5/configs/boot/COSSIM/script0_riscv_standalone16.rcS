@@ -1,0 +1,33 @@
+#!/bin/sh
+nproc
+ifconfig eth0 hw ether 00:90:00:00:00:00
+ifconfig lo 127.0.0.1                             #Configure the localhost
+ifconfig eth0 192.168.0.2                            #Configure the Ethernet
+ifconfig eth0 netmask 255.255.255.0               #Configure the Netmask
+#route add default gw 10.0.1.1                     #Configure the Gateway
+ulimit -c unlimited
+
+sleep 1
+
+/etc/init.d/xinetd start
+
+#m5 resetstats
+
+# Here you can put your application
+hostname node0
+#rsh 192.168.0.3 hostname node1
+cd /home/ubuntu
+m5 resetstats
+nproc
+mpirun -n 16 HPCG/build/bin/xhpcg --nx=16 --ny=16 --nz=16 --npx=4 --npy=2 --npz=2 --rt=2
+nproc
+#sleep 1
+#mpirun -n 2 HPCG/build_RVV/bin/xhpcg --nx=16 --ny=16 --nz=16 --npx=2 --npy=1 --npz=1 --rt=2
+#mpirun -n 64 HPCG/build/bin/xhpcg --nx=16 --ny=16 --nz=16 --npx=4 --npy=4 --npz=4 --rt=1
+#m5 dumpstats
+ls
+sync
+# END Here you can put your application
+
+exec /bin/sh
+#m5 exit

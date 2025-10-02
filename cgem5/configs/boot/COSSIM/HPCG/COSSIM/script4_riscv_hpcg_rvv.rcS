@@ -1,0 +1,45 @@
+#!/bin/sh
+nproc
+
+ifconfig eth0 hw ether 00:90:00:00:00:04
+ifconfig lo 127.0.0.1                             #Configure the localhost
+ifconfig eth0 192.168.0.6                            #Configure the Ethernet
+ifconfig eth0 netmask 255.255.255.0               #Configure the Netmask
+#route add default gw 10.0.1.1                     #Configure the Gateway
+ulimit -c unlimited
+
+sleep 1
+
+/etc/init.d/xinetd start
+
+#m5 resetstats
+
+#export PATH=$PATH:/opt/vef_prospector/bin
+#export LD_LIBRARY_PATH=:/opt/vef_prospector/lib/
+
+# Here you can put your application
+hostname node4
+
+cd /home/ubuntu
+
+rm host_file
+echo "node0:16" > host_file
+echo "node1:16" >> host_file
+echo "node2:16" >> host_file
+echo "node3:16" >> host_file
+echo "node4:16" >> host_file
+echo "node5:16" >> host_file
+echo "node6:16" >> host_file
+echo "node7:16" >> host_file
+
+#rsh 192.168.0.3 hostname node1
+cd /home/ubuntu/HPCG_Vitamin/HPCG_rvv
+#m5 resetstats
+#mpirun -n 64 HPCG/build/bin/xhpcg --nx=16 --ny=16 --nz=16 --npx=4 --npy=4 --npz=4 --rt=1
+#m5 dumpstats
+ls
+sync
+# END Here you can put your application
+
+exec /bin/sh
+#m5 exit

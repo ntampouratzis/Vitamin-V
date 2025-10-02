@@ -1,0 +1,170 @@
+Global frequency set at 1000000000000 ticks per second
+warn: No dot file generated. Please install pydot to generate the dot file and pdf.
+src/mem/dram_interface.cc:690: warn: DRAM device capacity (16384 Mbytes) does not match the address range assigned (4096 Mbytes)
+src/mem/dram_interface.cc:690: warn: DRAM device capacity (16384 Mbytes) does not match the address range assigned (4096 Mbytes)
+
+1. COSSIM_PROC_NET_NODE1
+HLA_GEM5 Note : FederationExecutionAlreadyExists Reason is : COSSIM_PROC_NET_NODE1. OK I can join it
+announceSynchronizationPoint
+
+2. GEM5_NODE1
+HLA_GEM5 Note : FederationExecutionAlreadyExists Reason is : GLOBAL_SYNCHRONIZATION. OK I can join it
+announceSynchronizationPoint
+board.terminal: Listening for connections on port 3001
+src/arch/riscv/isa.cc:319: info: RVV enabled, VLEN = 256 bits, ELEN = 64 bits
+src/base/statistics.hh:279: warn: One of the stats is a legacy stat. Legacy stat is a stat that does not belong to any statistics::Group. Legacy stat is deprecated.
+src/arch/riscv/isa.cc:319: info: RVV enabled, VLEN = 256 bits, ELEN = 64 bits
+board.remote_gdb: Listening for connections on port 7000
+src/arch/riscv/linux/fs_workload.cc:162: info: Loaded bootloader '/home/ntampouratzis/COSSIM/kernels/binaries/fw_jump_1.4.elf' at 0x0
+src/arch/riscv/linux/fs_workload.cc:180: info: Loaded kernel '/home/ntampouratzis/COSSIM/kernels/binaries/riscv-vmlinux-6.15.4' at 0x80200000
+src/arch/riscv/linux/fs_workload.cc:199: info: Loaded DTB '/home/ntampouratzis/Vitamin-V/gem5_v25.0.0.1/gem5/node1/device.dtb' at 0x87e00000
+Redirecting stdout and stderr to /home/ntampouratzis/Vitamin-V/gem5_v25.0.0.1/gem5/node1/simout.txt
+gem5 Simulator System.  https://www.gem5.org
+gem5 is copyrighted software; use the --copyright option for details.
+
+gem5 version 25.0.0.1
+gem5 compiled Oct  1 2025 17:58:30
+gem5 started Oct  1 2025 18:16:46
+gem5 executing on kronos-Server, pid 726633
+command line: /home/ntampouratzis/Vitamin-V/gem5_v25.0.0.1/gem5/build/RISCV/gem5.fast --listener-mode=on -r -d /home/ntampouratzis/Vitamin-V/gem5_v25.0.0.1/gem5/node1 /home/ntampouratzis/Vitamin-V/gem5_v25.0.0.1/gem5/configs/example/gem5_library/riscv-ubuntu-run.py --kernel=riscv-vmlinux-6.15.4 --disk-image=llama/llama_openssl_k_ext/riscv-ubuntu-24-04-gcc13.img --SynchTime=1us --RxPacketTime=1us --TotalNodes=2 --nodeNum=1 --etherdump=/home/ntampouratzis/Vitamin-V/gem5_v25.0.0.1/gem5/node1/ether_node1 --script=/home/ntampouratzis/Vitamin-V/gem5_v25.0.0.1/gem5/configs/boot/COSSIM/stunnel_llama/script1_stunnel_llama.rcS --cossim
+
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER03.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER03.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER03.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER04.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER04.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER05.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER05.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER06.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER06.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER07.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER07.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER08.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER08.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER09.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER09.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER10.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER10.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER11.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER11.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER12.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER12.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER13.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER13.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER14.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER14.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER15.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER15.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER16.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER16.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER17.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER17.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER18.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER18.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER19.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER19.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER20.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER20.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER21.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER21.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER22.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER22.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER23.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER23.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER24.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER24.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER25.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER25.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER26.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER26.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER27.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER27.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER28.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER28.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER29.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER29.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER30.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER30.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER31.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER31.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER03.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER03.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER03.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER04.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER04.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER05.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER05.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER06.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER06.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER07.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER07.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER08.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER08.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER09.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER09.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER10.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER10.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER11.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER11.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER12.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER12.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER13.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER13.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER14.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER14.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER15.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER15.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER16.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER16.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER17.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER17.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER18.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER18.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER19.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER19.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER20.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER20.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER21.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER21.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER22.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER22.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER23.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER23.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER24.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER24.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER25.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER25.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER26.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER26.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER27.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER27.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER28.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER28.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER29.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER29.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER30.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER30.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER31.
+src/arch/riscv/isa.cc:691: warn: Ignoring write to miscreg HPMCOUNTER31.
+src/dev/riscv/vio_mmio.cc:216: warn: Ignoring queue resize hint. Requested size: 16
+src/arch/riscv/isa.cc:1043: warn: 1017746081875: context 1: 10000 consecutive SC failures.
+src/arch/riscv/isa.cc:1043: warn: 6570329060000: context 1: 20000 consecutive SC failures.
+src/arch/riscv/isa.cc:1043: warn: 6621667519375: context 1: 30000 consecutive SC failures.
+src/arch/riscv/isa.cc:1043: warn: 7423965779375: context 1: 40000 consecutive SC failures.
+src/arch/riscv/isa.cc:1043: warn: 8213582145000: context 0: 10000 consecutive SC failures.
+src/arch/riscv/isa.cc:1043: warn: 8532828081875: context 1: 50000 consecutive SC failures.
+src/arch/riscv/isa.cc:1043: warn: 9977542284375: context 1: 60000 consecutive SC failures.
+src/arch/riscv/isa.cc:1043: warn: 11399900645000: context 1: 70000 consecutive SC failures.
+src/arch/riscv/isa.cc:1043: warn: 12853525766875: context 1: 80000 consecutive SC failures.
+src/arch/riscv/isa.cc:1043: warn: 14279256908125: context 1: 90000 consecutive SC failures.
+src/arch/riscv/isa.cc:1043: warn: 15710399298125: context 1: 100000 consecutive SC failures.
+src/arch/riscv/isa.cc:1043: warn: 16938569647500: context 1: 110000 consecutive SC failures.
+src/arch/riscv/isa.cc:1043: warn: 17834536568125: context 1: 120000 consecutive SC failures.
+src/arch/riscv/isa.cc:1043: warn: 18714064693125: context 1: 130000 consecutive SC failures.
+src/arch/riscv/isa.cc:1043: warn: 19596221658750: context 1: 140000 consecutive SC failures.
+src/arch/riscv/isa.cc:1043: warn: 20476291432500: context 1: 150000 consecutive SC failures.
+src/arch/riscv/isa.cc:1043: warn: 21575473198750: context 1: 160000 consecutive SC failures.
+src/arch/riscv/isa.cc:1043: warn: 22458569795000: context 1: 170000 consecutive SC failures.
+src/arch/riscv/isa.cc:1043: warn: 23762379394375: context 1: 180000 consecutive SC failures.
+src/arch/riscv/isa.cc:1043: warn: 25268302961875: context 1: 190000 consecutive SC failures.
+src/arch/riscv/isa.cc:1043: warn: 47905911230625: context 1: 200000 consecutive SC failures.

@@ -1,0 +1,40 @@
+#!/bin/sh
+nproc
+ifconfig eth0 hw ether 00:90:00:00:00:05
+ifconfig lo 127.0.0.1                             #Configure the localhost
+ifconfig eth0 192.168.0.7                            #Configure the Ethernet
+ifconfig eth0 netmask 255.255.255.0           	  #Configure the Netmask
+ulimit -c unlimited
+
+sleep 1
+
+#/etc/init.d/xinetd start #Initialize RSH server
+
+#sleep 1
+
+# Here you can put your application
+hostname node5
+
+#sleep 2
+
+m5 resetstats
+cd /root/llama.cpp.vector_old/build-rpc
+#cd /root/llama.cpp.scalar/build-rpc
+#./server_monitor.sh > output.log 2>&1 &
+#timeout 65s bin/rpc-server --host 192.168.0.5 --port 8080
+
+
+bin/rpc-server --host 192.168.0.7 --port 8080
+
+#cat usage_log.txt
+#./llama-server --host 192.168.0.3 --port 8080 -m ../tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf -c 2048
+#./llama-server --host 192.168.0.3 --port 8080 -m ../tinydolphin-2.8.2-1.1b-laser.Q4_K_M.gguf -c 2048
+
+#m5 resetstats
+nproc
+ls
+sync
+# END Here you can put your application
+
+#exec /bin/sh
+#m5 exit

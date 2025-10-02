@@ -1,0 +1,53 @@
+#!/bin/sh
+nproc
+ifconfig eth0 hw ether 00:90:00:00:00:00
+ifconfig lo 127.0.0.1                             #Configure the localhost
+ifconfig eth0 192.168.0.2                            #Configure the Ethernet
+ifconfig eth0 netmask 255.255.255.0               #Configure the Netmask
+ulimit -c unlimited
+
+export PATH=$PATH:/usr/local/ssl/bin/
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/ssl/lib/
+export OPENSSL_riscvcap="rv64gc_zba_zbb_zbc_zbs_zbkb_zbkc_zbkx_zknd_zkne_zknh_zksed_zksh_zkt"
+#export OPENSSL_riscvcap="rv64gc"
+
+date -s "31 MAY 2025 18:00:00"
+sleep 1
+
+#/etc/init.d/xinetd start #Initialize RSH server
+
+stunnel /etc/stunnel/stunnel_server.conf
+#stunnel /etc/stunnel/stunnel_server2.conf
+
+#sleep 1
+
+# Here you can put your application
+hostname node0
+
+sleep 1
+
+m5 resetstats
+cd /root/llama.cpp.vector_old/build-rpc
+#cd /root/llama.cpp.scalar/build-rpc
+#./server_monitor.sh > output.log 2>&1 &
+#timeout 48s bin/rpc-server --host 192.168.0.2 --port 8080
+
+bin/rpc-server --host 127.0.0.1 --port 12345
+
+#cd /root/llama.cpp.vector/build-rpc
+#cd /root/llama.cpp.scalar/build-rpc
+#./server_monitor.sh > output.log 2>&1 &
+#timeout 48s bin/rpc-server --host 192.168.0.2 --port 8080
+
+#cat usage_log.txt
+#./llama-server --host 192.168.0.2 --port 8080 -m ../tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf -c 2048
+#./llama-server --host 192.168.0.2 --port 8080 -m ../tinydolphin-2.8.2-1.1b-laser.Q4_K_M.gguf -c 2048
+
+
+nproc
+ls
+sync
+# END Here you can put your application
+
+#exec /bin/sh
+#m5 exit
