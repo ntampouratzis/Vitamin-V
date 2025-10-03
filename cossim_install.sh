@@ -92,6 +92,7 @@ o	Select Project -> Clean -> Select “HLANode” & “test” -> Select “Star
 cd $HOME
 sudo apt-get install ninja-build
 sudo apt install libglib2.0-dev libpixman-1-dev
+sudo apt install python3-venv python3-pip python3-setuptools
 mkdir riscv-ubuntu/
 cd riscv-ubuntu/
 git clone https://github.com/qemu/qemu --recursive
