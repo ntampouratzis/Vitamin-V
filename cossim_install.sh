@@ -94,10 +94,10 @@ sudo apt-get install ninja-build
 sudo apt install libglib2.0-dev libpixman-1-dev
 mkdir riscv-ubuntu/
 cd riscv-ubuntu/
-git clone https://github.com/qemu/qemu
-cd qemu/
-git checkout 0021c4765a6b83e5b09409b75d50c6caaa6971b9
-./configure --target-list=riscv64-softmmu
+git clone https://github.com/qemu/qemu --recursive
+cd qemu
+git checkout stable-8.2
+./configure --target-list=riscv64-softmmu --enable-slirp
 make -j $(nproc)
 make install
 
