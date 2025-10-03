@@ -138,7 +138,7 @@ memory = DualChannelDDR4_2400(size="8GiB")
 
 # Here we setup the processor. We use a simple processor.
 processor = SimpleProcessor(
-    cpu_type=CPUTypes.TIMING, isa=ISA.RISCV, num_cores=2
+    cpu_type=CPUTypes.TIMING, isa=ISA.RISCV, num_cores=8
 )
 
 # Here we setup the board. The RiscvBoard allows for Full-System RISCV
