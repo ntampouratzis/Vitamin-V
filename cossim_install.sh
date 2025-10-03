@@ -15,8 +15,8 @@ sudo apt install openjdk-8-jdk openjdk-8-jre tcl-dev tk-dev qt4-qmake libqt4-dev
 
 #Manual Installation
 cd $HOME
-git clone https://github.com/ntampouratzis/RED-SEA.git
-mv -f $HOME/RED-SEA $HOME/COSSIM
+git clone https://github.com/ntampouratzis/Vitamin-V.git
+mv -f $HOME/Vitamin-V $HOME/COSSIM
 
 ##cCERTI & Our SynchServer Installation
 cd $HOME/COSSIM/cCERTI
@@ -31,7 +31,7 @@ cd $HOME/COSSIM/cCERTI/SynchServer
 ./build.sh
 
 cd $HOME/COSSIM/cCERTI
-cp Federation.fed $HOME/COSSIM/cCERTI/build_certi/share/federations 
+cp Federation.fed $HOME/COSSIM/cCERTI/build_certi/share/federations
 
 echo "#cCERTI exports" >> ~/.bashrc
 echo "export CERTI_HOME=$HOME/COSSIM/cCERTI/build_certi" >> ~/.bashrc
@@ -46,11 +46,11 @@ echo "export CERTI_HOST=127.0.0.1" >> ~/.bashrc
 ##cgem5 Installation
 cd $HOME/COSSIM/cgem5
 source ~/.bashrc
-scons build/ARM/gem5.fast -j4
+scons build/RISCV/gem5.fast -j4
 
-##Download GEM5 images and kernels from here: http://kition.mhl.tuc.gr:8000/f/ee638f25d1/ 
 ##Untar kernels and images in $HOME/COSSIM directory
-cd $HOME/COSSIM
+cd $HOME/COSSIM/kernels
+cat kernels.tar.xz* | tar xzvf -
 tar -xf kernels.tar.xz
 
 echo "#GEM5 exports" >> ~/.bashrc
@@ -58,11 +58,11 @@ echo "export GEM5=$HOME/COSSIM/cgem5" >> ~/.bashrc
 echo "export M5_PATH=$HOME/COSSIM/kernels" >> ~/.bashrc
 
 ##cMcPAT Installation
-cd $HOME/COSSIM/cgem5/McPat/mcpat
-make all
-cd $HOME/COSSIM/cgem5/McPat/Scripts
-chmod +x GEM5ToMcPAT.py
-chmod +x print_energy.py
+#cd $HOME/COSSIM/cgem5/McPat/mcpat
+#make all
+#cd $HOME/COSSIM/cgem5/McPat/Scripts
+#chmod +x GEM5ToMcPAT.py
+#chmod +x print_energy.py
 
 ## cOMNET++ with COSSIM WORKSPACE Installation
 ## Download OMNeT++ 5.0 from http://omnetpp.org. Make sure you select to download the generic archive, omnetpp-5.0-src.tgz.
