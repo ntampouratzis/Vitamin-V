@@ -1,0 +1,9 @@
+23:48:58 **** Clean-only build of configuration gcc-debug for project inet ****
+make MODE=debug CONFIGNAME=gcc-debug -j32 clean 
+cd src && make clean
+make[1]: Entering directory '/home/ntampouratzis/COSSIM/OMNETPP_COSSIM_workspace/OMNET_WORKSPACE/inet/src'
+Cleaning...
+make[1]: Leaving directory '/home/ntampouratzis/COSSIM/OMNETPP_COSSIM_workspace/OMNET_WORKSPACE/inet/src'
+
+23:48:59 Build Finished (took 414ms)
+

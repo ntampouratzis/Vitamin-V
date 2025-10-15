@@ -1,0 +1,114 @@
+!SESSION 2025-10-15 23:25:48.796 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.8.0_462
+java.vendor=Private Build
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Command-line arguments:  -os linux -ws gtk -arch x86_64
+
+This is a continuation of log file /home/ntampouratzis/COSSIM/OMNETPP_COSSIM_workspace/OMNET_WORKSPACE/.metadata/.bak_0.log
+Created Time: 2025-10-15 23:26:08.237
+
+!ENTRY org.eclipse.cdt.core 2 0 2025-10-15 23:26:08.237
+!MESSAGE Error getting ScannerInfo: Unable to determine language for resource L/inet/src/inet/applications/ethernet/EtherApp.msg
+!STACK 0
+java.lang.Exception
+	at org.eclipse.cdt.internal.core.language.settings.providers.LanguageSettingsScannerInfoProvider.getScannerInformation(LanguageSettingsScannerInfoProvider.java:86)
+	at org.eclipse.cdt.internal.core.language.settings.providers.LanguageSettingsScannerInfoProvider.getScannerInformation(LanguageSettingsScannerInfoProvider.java:1)
+	at org.omnetpp.cdt.cache.CppScanner.getScannerInfo(CppScanner.java:136)
+	at org.omnetpp.cdt.cache.CppScanner.<init>(CppScanner.java:119)
+	at org.omnetpp.cdt.cache.DependencyCache.collectFileIncludeStatements(DependencyCache.java:451)
+	at org.omnetpp.cdt.cache.DependencyCache$6.visit(DependencyCache.java:416)
+	at org.omnetpp.cdt.cache.DependencyCache$4.visit(DependencyCache.java:372)
+	at org.eclipse.core.internal.resources.Resource$2.visit(Resource.java:126)
+	at org.eclipse.core.internal.resources.Resource$1.visitElement(Resource.java:85)
+	at org.eclipse.core.internal.watson.ElementTreeIterator.doIteration(ElementTreeIterator.java:82)
+	at org.eclipse.core.internal.watson.ElementTreeIterator.doIteration(ElementTreeIterator.java:86)
+	at org.eclipse.core.internal.watson.ElementTreeIterator.doIteration(ElementTreeIterator.java:86)
+	at org.eclipse.core.internal.watson.ElementTreeIterator.doIteration(ElementTreeIterator.java:86)
+	at org.eclipse.core.internal.watson.ElementTreeIterator.doIteration(ElementTreeIterator.java:86)
+	at org.eclipse.core.internal.watson.ElementTreeIterator.doIteration(ElementTreeIterator.java:86)
+	at org.eclipse.core.internal.watson.ElementTreeIterator.iterate(ElementTreeIterator.java:127)
+	at org.eclipse.core.internal.resources.Resource.accept(Resource.java:95)
+	at org.eclipse.core.internal.resources.Resource.accept(Resource.java:52)
+	at org.eclipse.core.internal.resources.Resource.accept(Resource.java:124)
+	at org.eclipse.core.internal.resources.Resource.accept(Resource.java:108)
+	at org.omnetpp.cdt.cache.DependencyCache.visitNonGeneratedSourceFiles(DependencyCache.java:357)
+	at org.omnetpp.cdt.cache.DependencyCache.collectIncludeStatementsInProject(DependencyCache.java:403)
+	at org.omnetpp.cdt.cache.DependencyCache.computeCachedData(DependencyCache.java:312)
+	at org.omnetpp.cdt.cache.DependencyCache.getCrossFolderDependencies(DependencyCache.java:243)
+	at org.omnetpp.cdt.build.MetaMakemake.translateOptions(MetaMakemake.java:75)
+	at org.omnetpp.cdt.build.MetaMakemake.generateMakefile(MetaMakemake.java:56)
+	at org.omnetpp.cdt.build.MakefileBuilder.generateMakefileFor(MakefileBuilder.java:354)
+	at org.omnetpp.cdt.build.MakefileBuilder.generateMakefiles(MakefileBuilder.java:337)
+	at org.omnetpp.cdt.build.MakefileBuilder.build(MakefileBuilder.java:77)
+	at org.eclipse.core.internal.events.BuildManager$2.run(BuildManager.java:734)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:206)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:246)
+	at org.eclipse.core.internal.events.BuildManager$1.run(BuildManager.java:299)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:302)
+	at org.eclipse.core.internal.events.BuildManager.basicBuildLoop(BuildManager.java:358)
+	at org.eclipse.core.internal.events.BuildManager.build(BuildManager.java:381)
+	at org.eclipse.core.internal.resources.Workspace.buildInternal(Workspace.java:496)
+	at org.eclipse.core.internal.resources.Workspace.build(Workspace.java:415)
+	at org.eclipse.ui.actions.BuildAction$1.runInWorkspace(BuildAction.java:305)
+	at org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:38)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+
+!ENTRY org.eclipse.cdt.core 2 0 2025-10-15 23:26:08.249
+!MESSAGE Error getting ScannerInfo: Unable to determine language for resource L/inet/src/inet/applications/dhcp/DHCPMessage.msg
+!STACK 0
+java.lang.Exception
+	at org.eclipse.cdt.internal.core.language.settings.providers.LanguageSettingsScannerInfoProvider.getScannerInformation(LanguageSettingsScannerInfoProvider.java:86)
+	at org.eclipse.cdt.internal.core.language.settings.providers.LanguageSettingsScannerInfoProvider.getScannerInformation(LanguageSettingsScannerInfoProvider.java:1)
+	at org.omnetpp.cdt.cache.CppScanner.getScannerInfo(CppScanner.java:136)
+	at org.omnetpp.cdt.cache.CppScanner.<init>(CppScanner.java:119)
+	at org.omnetpp.cdt.cache.DependencyCache.collectFileIncludeStatements(DependencyCache.java:451)
+	at org.omnetpp.cdt.cache.DependencyCache$6.visit(DependencyCache.java:416)
+	at org.omnetpp.cdt.cache.DependencyCache$4.visit(DependencyCache.java:372)
+	at org.eclipse.core.internal.resources.Resource$2.visit(Resource.java:126)
+	at org.eclipse.core.internal.resources.Resource$1.visitElement(Resource.java:85)
+	at org.eclipse.core.internal.watson.ElementTreeIterator.doIteration(ElementTreeIterator.java:82)
+	at org.eclipse.core.internal.watson.ElementTreeIterator.doIteration(ElementTreeIterator.java:86)
+	at org.eclipse.core.internal.watson.ElementTreeIterator.doIteration(ElementTreeIterator.java:86)
+	at org.eclipse.core.internal.watson.ElementTreeIterator.doIteration(ElementTreeIterator.java:86)
+	at org.eclipse.core.internal.watson.ElementTreeIterator.doIteration(ElementTreeIterator.java:86)
+	at org.eclipse.core.internal.watson.ElementTreeIterator.doIteration(ElementTreeIterator.java:86)
+	at org.eclipse.core.internal.watson.ElementTreeIterator.iterate(ElementTreeIterator.java:127)
+	at org.eclipse.core.internal.resources.Resource.accept(Resource.java:95)
+	at org.eclipse.core.internal.resources.Resource.accept(Resource.java:52)
+	at org.eclipse.core.internal.resources.Resource.accept(Resource.java:124)
+	at org.eclipse.core.internal.resources.Resource.accept(Resource.java:108)
+	at org.omnetpp.cdt.cache.DependencyCache.visitNonGeneratedSourceFiles(DependencyCache.java:357)
+	at org.omnetpp.cdt.cache.DependencyCache.collectIncludeStatementsInProject(DependencyCache.java:403)
+	at org.omnetpp.cdt.cache.DependencyCache.computeCachedData(DependencyCache.java:312)
+	at org.omnetpp.cdt.cache.DependencyCache.getCrossFolderDependencies(DependencyCache.java:243)
+	at org.omnetpp.cdt.build.MetaMakemake.translateOptions(MetaMakemake.java:75)
+	at org.omnetpp.cdt.build.MetaMakemake.generateMakefile(MetaMakemake.java:56)
+	at org.omnetpp.cdt.build.MakefileBuilder.generateMakefileFor(MakefileBuilder.java:354)
+	at org.omnetpp.cdt.build.MakefileBuilder.generateMakefiles(MakefileBuilder.java:337)
+	at org.omnetpp.cdt.build.MakefileBuilder.build(MakefileBuilder.java:77)
+	at org.eclipse.core.internal.events.BuildManager$2.run(BuildManager.java:734)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:206)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:246)
+	at org.eclipse.core.internal.events.BuildManager$1.run(BuildManager.java:299)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:302)
+	at org.eclipse.core.internal.events.BuildManager.basicBuildLoop(BuildManager.java:358)
+	at org.eclipse.core.internal.events.BuildManager.build(BuildManager.java:381)
+	at org.eclipse.core.internal.resources.Workspace.buildInternal(Workspace.java:496)
+	at org.eclipse.core.internal.resources.Workspace.build(Workspace.java:415)
+	at org.eclipse.ui.actions.BuildAction$1.runInWorkspace(BuildAction.java:305)
+	at org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:38)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+!SESSION 2025-10-15 23:48:49.841 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.8.0_462
+java.vendor=Private Build
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Command-line arguments:  -os linux -ws gtk -arch x86_64
+
+!ENTRY org.omnetpp.main 1 0 2025-10-15 23:48:51.818
+!MESSAGE OMNeT++ IDE 5.0.0.160414-aa4629c started.

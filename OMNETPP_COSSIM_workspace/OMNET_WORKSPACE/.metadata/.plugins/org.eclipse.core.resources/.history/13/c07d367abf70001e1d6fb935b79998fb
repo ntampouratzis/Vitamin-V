@@ -1,0 +1,210 @@
+// ----------------------------------------------------------------------------
+// COSSIM - Example of 4 simulated HLANodes using both Ethernet and Wireless networks.
+// Copyright (c) 2018, H2020 COSSIM.
+// Copyright (c) 2018, Telecommunications Systems Institute.
+// 
+// Author: Nikolaos Tampouratzis, ntampouratzis@isc.tuc.gr
+// ----------------------------------------------------------------------------
+
+package test.simulations;
+
+import HLANode.SyncNode;
+import HLANode.Txc0;
+import HLANode.Txc1;
+//import HLANode.Txc2;
+//import HLANode.Txc3;
+//import HLANode.Txc4;
+//import HLANode.Txc5;
+//import HLANode.Txc6;
+//import HLANode.Txc7;
+//
+//import HLANode.Txc8;
+//import HLANode.Txc9;
+//import HLANode.Txc10;
+//import HLANode.Txc11;
+//import HLANode.Txc12;
+//import HLANode.Txc13;
+//import HLANode.Txc14;
+//import HLANode.Txc15;
+
+import inet.node.ethernet.EtherSwitch;
+import ned.DatarateChannel;
+
+import inet.node.inet.Router;
+import inet.networklayer.configurator.ipv4.IPv4NetworkConfigurator;
+
+import inet.node.aodv.AODVRouter;
+import inet.networklayer.configurator.ipv4.IPv4NetworkConfigurator;
+import inet.node.inet.INetworkNode;
+import inet.networklayer.configurator.ipv4.IPv4NetworkConfigurator;
+import inet.node.ethernet.Eth100M;
+import inet.node.inet.Router;
+import inet.node.inet.StandardHost;
+import inet.node.inet.NodeBase;
+import inet.node.inet.WirelessHost;
+import inet.node.wireless.AccessPoint;
+import inet.physicallayer.ieee80211.packetlevel.Ieee80211ScalarRadioMedium;
+
+
+
+
+
+module CossimWirelessHostTower extends AODVRouter
+{
+    @display("i=device/antennatower");
+    numRadios = default(1);
+}
+
+
+module CossimWirelessHostMobile extends AODVRouter
+{
+    @display("i=device/cellphone");
+    numRadios = default(1);
+}
+
+ 
+network ARPTest
+{
+    types:
+
+
+        channel ethline extends DatarateChannel
+        {
+            delay = 0ms;
+            datarate = 10000Mbps;
+        }
+    submodules:
+
+//        micro_router0: CossimWirelessHostTower {
+//
+//            @display("p=322,137");
+//        }
+//
+//        micro_router1: CossimWirelessHostMobile {
+//            @display("p=432,182");
+//        }
+
+
+//        radioMedium: Ieee80211ScalarRadioMedium {
+//            @display("p=64,350");
+//        }
+
+
+
+
+        switch1: EtherSwitch {
+            @display("p=203,159");
+        }
+
+ 
+        configurator: IPv4NetworkConfigurator {
+            //  assignDisjunctSubnetAddresses = true;
+            config = xmldoc("config1.xml");
+
+            @display("p=65,90");
+        }
+
+
+        node0: Txc0 {
+            parameters:
+                @display("i=device/server_l;p=382,58");
+        }
+        node1: Txc1 {
+            parameters:
+                @display("i=device/pc;p=439,276");
+        }
+//        node2: Txc2 {
+//            parameters:
+//                @display("i=device/pc;p=142,289");
+//        }
+//        node3: Txc3 {
+//            parameters:
+//                @display("i=device/pc;p=262,289");
+//        }
+//        node4: Txc4 {
+//            parameters:
+//                @display("i=device/pc;p=482,58");
+//        }
+//        node5: Txc5 {
+//            parameters:
+//                @display("i=device/pc;p=539,276");
+//        }
+//        node6: Txc6 {
+//            parameters:
+//                @display("i=device/pc;p=182,289");
+//        }
+//        node7: Txc7 {
+//            parameters:
+//                @display("i=device/pc;p=362,289");
+//        }
+//        
+//        
+//        node8: Txc8 {
+//            parameters:
+//                @display("i=device/pc;p=382,158");
+//        }
+//        node9: Txc9 {
+//            parameters:
+//                @display("i=device/pc;p=439,376");
+//        }
+//        node10: Txc10 {
+//            parameters:
+//                @display("i=device/pc;p=142,389");
+//        }
+//        node11: Txc11 {
+//            parameters:
+//                @display("i=device/pc;p=262,389");
+//        }
+//        node12: Txc12 {
+//            parameters:
+//                @display("i=device/pc;p=482,158");
+//        }
+//        node13: Txc13 {
+//            parameters:
+//                @display("i=device/pc;p=539,376");
+//        }
+//        node14: Txc14 {
+//            parameters:
+//                @display("i=device/pc;p=182,389");
+//        }
+//        node15: Txc15 {
+//            parameters:
+//                @display("i=device/pc;p=362,389");
+//        }
+
+        syncnode: SyncNode {
+            parameters:
+                @display("i=,red");
+        }
+
+    connections:
+        syncnode.out --> {  delay = 0ms; } --> syncnode.in;
+
+        node0.gate <--> ethline<--> switch1.ethg++;
+        node1.gate <--> ethline <--> switch1.ethg++;
+
+//        node0.gate <--> ethline <--> micro_router0.ethg++;
+//        node1.gate <--> ethline <--> micro_router1.ethg++;        
+//        micro_router0.ethg++ <--> ethline <--> switch1.ethg++;
+
+
+//        node2.gate <--> ethline<--> switch1.ethg++;
+//        node3.gate <--> ethline <--> switch1.ethg++;
+        
+//        node4.gate <--> ethline<--> switch1.ethg++;
+//        node5.gate <--> ethline <--> switch1.ethg++;
+//        node6.gate <--> ethline<--> switch1.ethg++;
+//        node7.gate <--> ethline <--> switch1.ethg++;
+//
+//
+//        node8.gate <--> ethline<--> switch1.ethg++;
+//        node9.gate <--> ethline <--> switch1.ethg++;
+//        node10.gate <--> ethline<--> switch1.ethg++;
+//        node11.gate <--> ethline <--> switch1.ethg++;
+//        node12.gate <--> ethline<--> switch1.ethg++;
+//        node13.gate <--> ethline <--> switch1.ethg++;
+//        node14.gate <--> ethline<--> switch1.ethg++;
+//        node15.gate <--> ethline <--> switch1.ethg++;
+
+}
+

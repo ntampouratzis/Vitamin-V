@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
+		<item value="false" key="isRegEx"/>
+		<item value=".sh" key="selection"/>
+		<item value="false" key="casesensitive"/>
+		<item value="false" key="incremental"/>
+		<item value="true" key="wrap"/>
+		<item value="false" key="wholeword"/>
+		<list key="findhistory">
+			<item value=".sh"/>
+			<item value="run_"/>
+			<item value="EthernetIIFrame taken"/>
+			<item value="node0"/>
+			<item value="sendInte"/>
+			<item value="CRC_Calculate"/>
+			<item value="sendInter"/>
+			<item value="$"/>
+		</list>
+		<list key="replacehistory">
+		</list>
+	</section>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
+		<item value="333" key="DIALOG_WIDTH"/>
+		<item value="1|Sans|10.0|0|GTK|1|" key="DIALOG_FONT_NAME"/>
+		<item value="469" key="DIALOG_HEIGHT"/>
+		<item value="189" key="DIALOG_Y_ORIGIN"/>
+		<item value="1142" key="DIALOG_X_ORIGIN"/>
+	</section>
+</section>

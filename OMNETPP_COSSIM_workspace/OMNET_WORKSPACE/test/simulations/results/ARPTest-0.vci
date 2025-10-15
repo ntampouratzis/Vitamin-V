@@ -1,0 +1,97 @@
+file 57597898 1759603411                                        
+version 2
+run ARPTest-0-20251003-10:37:53-783558
+attr configname ARPTest
+attr datetime 20251003-10:37:53
+attr experiment ARPTest
+attr inifile omnetpp.ini
+attr iterationvars ""
+attr iterationvars2 $repetition=0
+attr measurement ""
+attr network ARPTest
+attr processid 783558
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 0
+attr seedset 0
+param *.configurator.addStaticRoutes false
+param *.micro_router*.energyStorageType "\"IdealEnergyStorage\""
+param *.micro_router*.wlan[0].radio.bandwidth 2MHz
+param *.micro_router*.wlan[0].radio.carrierFrequency 2GHz
+param *.micro_router*.wlan[0].radio.energyConsumer.offPowerConsumption 0mW
+param *.micro_router*.wlan[0].radio.energyConsumer.receiverBusyPowerConsumption 5mW
+param *.micro_router*.wlan[0].radio.energyConsumer.receiverIdlePowerConsumption 2mW
+param *.micro_router*.wlan[0].radio.energyConsumer.receiverReceivingPowerConsumption 10mW
+param *.micro_router*.wlan[0].radio.energyConsumer.sleepPowerConsumption 1mW
+param *.micro_router*.wlan[0].radio.energyConsumer.switchingPowerConsumption 1mW
+param *.micro_router*.wlan[0].radio.energyConsumer.transmitterTransmittingPowerConsumption 100mW
+param *.micro_router*.wlan[0].radio.energyConsumerType "\"StateBasedEnergyConsumer\""
+param *.micro_router*.wlan[0].radio.receiver.energyDetection -85dBm
+param *.micro_router*.wlan[0].radio.receiver.sensitivity -85dBm
+param *.micro_router*.wlan[0].radio.receiver.snirThreshold 4dB
+param *.micro_router*.wlan[0].radio.transmitter.communicationRange 250m
+param *.micro_router*.wlan[0].radio.transmitter.headerBitLength 0b
+param *.micro_router*.wlan[0].radio.transmitter.power 1.4mW
+param *.micro_router*.wlan[0].radio.transmitter.preambleDuration 10us
+param *.micro_router*.wlan[0].radio.typename "\"IdealWirelessNic\""
+param *.micro_router*.wlan[0].radioType "\"APSKScalarRadio\""
+param ARPTest.micro_router0.routingTable.routingFile "\"whost0.mrt\""
+param ARPTest.micro_router1.routingTable.routingFile "\"whost1.mrt\""
+
+vector 12  ARPTest.switch1.eth[1].mac  rxPkOk:vector(packetBytes)  ETV
+attr interpolationmode  none
+attr source  rxPkOk
+attr title  "packets received OK, vector(packetBytes)"
+vector 13  ARPTest.switch1.eth[1].mac  passedUpPk:vector(packetBytes)  ETV
+attr interpolationmode  none
+attr source  packetSentToUpper
+attr title  "packets passed to higher layer, vector(packetBytes)"
+vector 5  ARPTest.switch1.eth[0].mac  rxPkFromHL:vector(packetBytes)  ETV
+attr interpolationmode  none
+attr source  rxPkFromHL
+attr title  "packet bytes from higher layer, vector(packetBytes)"
+vector 0  ARPTest.switch1.eth[0].mac  txPk:vector(packetBytes)  ETV
+attr interpolationmode  none
+attr source  txPk
+attr title  "packets transmitted, vector(packetBytes)"
+vector 1  ARPTest.switch1.eth[0].mac  rxPkOk:vector(packetBytes)  ETV
+attr interpolationmode  none
+attr source  rxPkOk
+attr title  "packets received OK, vector(packetBytes)"
+vector 2  ARPTest.switch1.eth[0].mac  passedUpPk:vector(packetBytes)  ETV
+attr interpolationmode  none
+attr source  packetSentToUpper
+attr title  "packets passed to higher layer, vector(packetBytes)"
+vector 16  ARPTest.switch1.eth[1].mac  rxPkFromHL:vector(packetBytes)  ETV
+attr interpolationmode  none
+attr source  rxPkFromHL
+attr title  "packet bytes from higher layer, vector(packetBytes)"
+vector 11  ARPTest.switch1.eth[1].mac  txPk:vector(packetBytes)  ETV
+attr interpolationmode  none
+attr source  txPk
+attr title  "packets transmitted, vector(packetBytes)"
+0	3470 4415614 15644266 37505663 5.2147531088 12.0358561088 161270 64 64 10321280 660561920
+1	4419084 355925 15644497 37504313 5.2148290512 12.0354610512 13492 0 0 0 0
+2	4775009 355925 15644497 37504313 5.2148290512 12.0354610512 13492 0 0 0 0
+5	5130934 4415642 15644263 37505671 5.2147530512 12.0358570512 161271 64 64 10321344 660566016
+11	9546576 382909 15644502 37504318 5.2148291088 12.0354611088 13492 64 64 863488 55263232
+12	9929485 4415642 15644261 37505669 5.2147530512 12.0358570512 161271 0 0 0 0
+13	14345127 4415642 15644261 37505669 5.2147530512 12.0358570512 161271 0 0 0 0
+16	18760769 382909 15644499 37504315 5.2148290512 12.0354610512 13492 64 64 863488 55263232
+0	19143678 4516988 37505674 55993903 12.0358571088 17.7325681088 161321 64 64 10324544 660770816
+1	23660666 362934 37506094 55993383 12.0359880512 17.7323990512 13442 0 0 0 0
+2	24023600 362934 37506094 55993383 12.0359880512 17.7323990512 13442 0 0 0 0
+5	24386534 4516960 37505682 55993900 12.0358580512 17.7325680512 161320 64 64 10324480 660766720
+11	28903494 389818 37506099 55993388 12.0359881088 17.7323991088 13442 64 64 860288 55058432
+12	29293312 4516988 37505680 55993909 12.0358580512 17.7325690512 161321 0 0 0 0
+13	33810300 4516988 37505680 55993909 12.0358580512 17.7325690512 161321 0 0 0 0
+16	38327288 389818 37506096 55993385 12.0359880512 17.7323990512 13442 64 64 860288 55058432
+0	38717106 4214969 55993914 133854667 17.7325691088 43.2375641088 150298 64 64 9619072 615620608
+1	42932075 487319 55994042 133854522 17.7325840512 43.2375200512 17924 0 0 0 0
+2	43419394 487319 55994042 133854522 17.7325840512 43.2375200512 17924 0 0 0 0
+5	43906713 4214969 55993911 133854664 17.7325690512 43.2375640512 150298 64 64 9619072 615620608
+11	48121682 523167 55994047 133854527 17.7325841088 43.2375201088 17924 64 64 1147136 73416704
+12	48644849 4214941 55993920 133854662 17.7325700512 43.2375640512 150297 0 0 0 0
+13	52859790 4214941 55993920 133854662 17.7325700512 43.2375640512 150297 0 0 0 0
+16	57074731 523167 55994044 133854524 17.7325840512 43.2375200512 17924 64 64 1147136 73416704

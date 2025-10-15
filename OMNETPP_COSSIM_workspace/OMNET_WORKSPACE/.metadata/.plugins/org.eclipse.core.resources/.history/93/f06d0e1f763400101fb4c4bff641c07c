@@ -1,0 +1,323 @@
+// ----------------------------------------------------------------------------
+// COSSIM - Example of 4 simulated HLANodes using both Ethernet and Wireless networks.
+// Copyright (c) 2018, H2020 COSSIM.
+// Copyright (c) 2018, Telecommunications Systems Institute.
+// 
+// Author: Nikolaos Tampouratzis, ntampouratzis@isc.tuc.gr
+// ----------------------------------------------------------------------------
+
+package test.simulations;
+
+import HLANode.SyncNode;
+import HLANode.Txc0;
+import HLANode.Txc1;
+import HLANode.Txc2;
+import HLANode.Txc3;
+import HLANode.Txc4;
+import HLANode.Txc5;
+import HLANode.Txc6;
+import HLANode.Txc7;
+////
+import HLANode.Txc8;
+//import HLANode.Txc9;
+//import HLANode.Txc10;
+//import HLANode.Txc11;
+//import HLANode.Txc12;
+//import HLANode.Txc13;
+//import HLANode.Txc14;
+//import HLANode.Txc15;
+//
+//import HLANode.Txc16;
+//import HLANode.Txc17;
+//import HLANode.Txc18;
+//import HLANode.Txc19;
+//import HLANode.Txc20;
+//import HLANode.Txc21;
+//import HLANode.Txc22;
+//import HLANode.Txc23;
+////
+//import HLANode.Txc24;
+//import HLANode.Txc25;
+//import HLANode.Txc26;
+//import HLANode.Txc27;
+//import HLANode.Txc28;
+//import HLANode.Txc29;
+//import HLANode.Txc30;
+//import HLANode.Txc31;
+
+import inet.node.ethernet.EtherSwitch;
+import ned.DatarateChannel;
+
+import inet.node.inet.Router;
+import inet.networklayer.configurator.ipv4.IPv4NetworkConfigurator;
+
+import inet.node.aodv.AODVRouter;
+import inet.networklayer.configurator.ipv4.IPv4NetworkConfigurator;
+import inet.node.inet.INetworkNode;
+import inet.networklayer.configurator.ipv4.IPv4NetworkConfigurator;
+import inet.node.ethernet.Eth100M;
+import inet.node.inet.Router;
+import inet.node.inet.StandardHost;
+import inet.node.inet.NodeBase;
+import inet.node.inet.WirelessHost;
+import inet.node.wireless.AccessPoint;
+import inet.physicallayer.ieee80211.packetlevel.Ieee80211ScalarRadioMedium;
+
+
+
+
+
+module CossimWirelessHostTower extends AODVRouter
+{
+    @display("i=device/antennatower");
+    numRadios = default(1);
+}
+
+
+module CossimWirelessHostMobile extends AODVRouter
+{
+    @display("i=device/cellphone");
+    numRadios = default(1);
+}
+
+
+network ARPTest
+{
+    @display("bgb=502,368");
+    types:
+
+
+        channel ethline extends DatarateChannel
+        {
+            delay = 0ms;
+            datarate = 10000Mbps;
+        }
+    submodules:
+
+//        micro_router0: CossimWirelessHostTower {
+//
+//            @display("p=322,137");
+//        }
+//
+//        micro_router1: CossimWirelessHostMobile {
+//            @display("p=432,182");
+//        }
+
+
+//        radioMedium: Ieee80211ScalarRadioMedium {
+//            @display("p=64,350");
+//        }
+
+
+
+
+        switch1: EtherSwitch {
+            @display("i=device/switch_l;p=180.76924,146.15385");
+        }
+
+//        switch2: EtherSwitch {
+//            @display("i=device/switch_l;p=180.76924,223.07693");
+//        }
+
+
+        configurator: IPv4NetworkConfigurator {
+            //  assignDisjunctSubnetAddresses = true;
+            config = xmldoc("config1.xml");
+
+            @display("i=device/vitamin-v_logo_sm1;p=318.93494,259.76334");
+        }
+
+        node0: Txc0 {
+            parameters:
+                @display("i=device/pc_l_riscv;p=223.07695,75.147934");
+        }
+
+        node1: Txc1 {
+            parameters:
+                @display("i=device/pc_l_riscv;p=223.07695,221.89351");
+        }
+        node2: Txc2 {
+            parameters:
+                @display("i=device/pc_l_riscv;p=113.01776,221.89351");
+        }
+        node3: Txc3 {
+            parameters:
+                @display("i=device/pc_l_riscv;p=300.00003,142.01186");
+        }
+        node4: Txc4 {
+            parameters:
+                @display("i=device/pc_l_riscv;p=72.189354,142.01186");
+        }
+//        node5: Txc5 {
+//            parameters:
+//                @display("i=device/pc;p=180.47339,292.3077");
+//        }
+//        node6: Txc6 {
+//            parameters:
+//                @display("i=device/pc;p=130,284.6154");
+//        }
+//        node7: Txc7 {
+//            parameters:
+//                @display("i=device/pc;p=304.14206,207.10062");
+//        }
+//
+//        //        
+//        node8: Txc8 {
+//            parameters:
+//                @display("i=device/pc;p=202,309");
+//        }
+//        node9: Txc9 {
+//            parameters:
+//                @display("i=device/pc;p=146,309");
+//        }
+//        node10: Txc10 {
+//            parameters:
+//                @display("i=device/pc;p=101,270");
+//        }
+//        node11: Txc11 {
+//            parameters:
+//                @display("i=device/pc;p=60,224");
+//        }
+//        node12: Txc12 {
+//            parameters:
+//                @display("i=device/pc;p=60,166");
+//        }
+//        node13: Txc13 {
+//            parameters:
+//                @display("i=device/pc;p=60,105");
+//        }
+//        node14: Txc14 {
+//            parameters:
+//                @display("i=device/pc;p=101,78");
+//        }
+//        node15: Txc15 {
+//            parameters:
+//                @display("i=device/pc;p=146,62");
+//        }
+//        
+//        
+//       node16: Txc16 {
+//            parameters:
+//                @display("i=device/server_l;p=382,158");
+//        }
+//        node17: Txc17 {
+//            parameters:
+//                @display("i=device/pc;p=439,376");
+//        }
+//        node18: Txc18 {
+//            parameters:
+//                @display("i=device/pc;p=142,389");
+//        }
+//        node19: Txc19 {
+//            parameters:
+//                @display("i=device/pc;p=262,389");
+//        }
+//        node20: Txc20 {
+//            parameters:
+//                @display("i=device/pc;p=482,258");
+//        }
+//        node21: Txc21 {
+//            parameters:
+//                @display("i=device/pc;p=539,376");
+//        }
+//        node22: Txc22 {
+//            parameters:
+//                @display("i=device/pc;p=182,389");
+//        }
+//        node23: Txc23 {
+//            parameters:
+//                @display("i=device/pc;p=362,389");
+//        }
+//        
+//        
+//        node24: Txc24 {
+//            parameters:
+//                @display("i=device/pc;p=382,258");
+//        }
+//        node25: Txc25 {
+//            parameters:
+//                @display("i=device/pc;p=439,476");
+//        }
+//        node26: Txc26 {
+//            parameters:
+//                @display("i=device/pc;p=142,489");
+//        }
+//        node27: Txc27 {
+//            parameters:
+//                @display("i=device/pc;p=262,489");
+//        }
+//        node28: Txc28 {
+//            parameters:
+//                @display("i=device/pc;p=482,258");
+//        }
+//        node29: Txc29 {
+//            parameters:
+//                @display("i=device/pc;p=539,476");
+//        }
+//        node30: Txc30 {
+//            parameters:
+//                @display("i=device/pc;p=182,489");
+//        }
+//        node31: Txc31 {
+//            parameters:
+//                @display("i=device/pc;p=362,489");
+//        }
+
+        syncnode: SyncNode {
+            parameters:
+                @display("i=,red;p=104.14202,69.822495");
+        }
+
+
+
+    connections:
+        syncnode.out --> {  delay = 0ms; } --> syncnode.in;
+
+        node0.gate <--> ethline <--> switch1.ethg++;
+        node1.gate <--> ethline <--> switch1.ethg++;
+
+
+//        node0.gate <--> ethline <--> micro_router0.ethg++;
+//        node1.gate <--> ethline <--> micro_router1.ethg++;        
+//        micro_router0.ethg++ <--> ethline <--> switch1.ethg++;
+
+
+//        switch1.ethg++ <--> ethline <--> switch2.ethg++;
+
+        node2.gate <--> ethline <--> switch1.ethg++;
+        node3.gate <--> ethline <--> switch1.ethg++;
+        node4.gate <--> ethline <--> switch1.ethg++;
+//        node5.gate <--> ethline <--> switch1.ethg++;
+//        node6.gate <--> ethline <--> switch1.ethg++;
+//        node7.gate <--> ethline <--> switch1.ethg++;
+//        ////
+//        ////
+//        node8.gate <--> ethline <--> switch1.ethg++;
+//        node9.gate <--> ethline <--> switch1.ethg++;
+//        node10.gate <--> ethline <--> switch1.ethg++;
+//        node11.gate <--> ethline <--> switch1.ethg++;
+//        node12.gate <--> ethline <--> switch1.ethg++;
+//        node13.gate <--> ethline <--> switch1.ethg++;
+//        node14.gate <--> ethline <--> switch1.ethg++;
+//        node15.gate <--> ethline <--> switch1.ethg++;
+//        
+//        node16.gate <--> ethline<--> switch1.ethg++;
+//        node17.gate <--> ethline <--> switch1.ethg++;
+//        node18.gate <--> ethline<--> switch1.ethg++;
+//        node19.gate <--> ethline <--> switch1.ethg++;
+//        node20.gate <--> ethline<--> switch1.ethg++;
+//        node21.gate <--> ethline <--> switch1.ethg++;
+//        node22.gate <--> ethline<--> switch1.ethg++;
+//        node23.gate <--> ethline <--> switch1.ethg++;
+//        
+//        node24.gate <--> ethline<--> switch1.ethg++;
+//        node25.gate <--> ethline <--> switch1.ethg++;
+//        node26.gate <--> ethline<--> switch1.ethg++;
+//        node27.gate <--> ethline <--> switch1.ethg++;
+//        node28.gate <--> ethline<--> switch1.ethg++;
+//        node29.gate <--> ethline <--> switch1.ethg++;
+//        node30.gate <--> ethline<--> switch1.ethg++;
+//        node31.gate <--> ethline <--> switch1.ethg++;
+
+}
+
