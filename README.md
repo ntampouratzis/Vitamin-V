@@ -8,6 +8,11 @@ This is the COSSIM [1] extension which is developed to simulate complete HPC and
 - The integration of VEF traces Framework [2] to analyze communication traffic of MPI-based applications and generate traces that can be used to feed other network simulators.
 - A thorough evaluation of the end system based on real-world distributed applications and benchmarks using RISC-V cryptography extensions as well as RVV 1.0.
 
+## Execution
+We have created a Virual Machine which we have install everything there. You may download it from [here](https://ihuedu-my.sharepoint.com/:f:/g/personal/ntampouratzis_ihu_gr/IgDeF22T4MgyTratYp_LLbkjAZ-QJm7BV_28bERZRCFfJr8?e=dWtGTD) (It is tested using VMWare 16.1 tools - [download the VM tools for Windows from here](https://ihuedu-my.sharepoint.com/:u:/g/personal/ntampouratzis_ihu_gr/EceCqMJ2-QdOpL3wbKX7bW8BZAuX1MzVrEpsxS9IpzNXJw?e=9HiYY4)). The VM password is <b>1234</b> .
+
+You may see the related video for instructions [MPI-on-COSSIM-multinode](https://ihuedu-my.sharepoint.com/:v:/g/personal/ntampouratzis_ihu_gr/ESDvvhcug59KgEsFf6vtsF0Bu2uiElYdARDRWMvMPbBiwQ). 
+Finally, you may see the execution of multi-node Llama Large Language Model [Llama-on-COSSIM-multinode]().
 
 
 ## References
